@@ -24,10 +24,28 @@ namespace ft{
 		}
 		return (first1 == last1) && (first2 != last2);
 	}
-	template < class InputIt >
-	typename ft::iterator_traits<InputIt>::difference_type distance( InputIt first, InputIt last)
+	template<class It>
+	typename ft::iterator_traits<It>::difference_type do_distance(It first, It last, ft::input_iterator_tag)
 	{
-
+		typename ft::iterator_traits<It>::difference_type result = 0;
+		while (first != last)
+		{
+			++first;
+			++result;
+		}
+		return result;
+	}
+ 
+	template<class It>
+	typename ft::iterator_traits<It>::difference_type do_distance(It first, It last, ft::random_access_iterator_tag)
+	{
+		return last - first ;
+	}
+ 
+	template<class It>
+	typename ft::iterator_traits<It>::difference_type distance(It first, It last)
+	{
+		return do_distance(first, last, typename ft::iterator_traits<It>::iterator_category());
 	}
 }
 #endif

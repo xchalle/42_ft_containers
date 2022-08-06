@@ -65,6 +65,7 @@ class vector
 		std::cout <<"mama"<< std::endl;
 		_begin = _alloc.allocate(count);
 		_end = _begin;
+		_capacity = count;
 		this->tester = 1345;
 		while (count > 0)
 		{
@@ -80,7 +81,8 @@ class vector
 	void assign( size_type count, const T& value)
 	{
 		_begin = _alloc.allocate(count);
-		_end = begin;
+		_end = _begin;
+		_capacity = count;
 		while (count > 0)
 		{
 			_alloc.construct(_end, value);
@@ -101,6 +103,7 @@ class vector
 		}
 		_begin = _alloc.allocate(n);
 		_end = _begin;
+		_capacity = n;
 		while (first != last)
 		{
 			_alloc.construct(_end, *first);
@@ -123,7 +126,7 @@ class vector
 	{
 		return (_alloc);
 	};
-//	AT TODO
+//	AT 
 	reference at( size_type pos )
 	{
 		if (pos > this->size())
@@ -137,7 +140,7 @@ class vector
 			throw std::out_of_range("exception at operation is out of range");
 		return (*(this)[pos]);
 	};
-//	OPERATOR[] TODO
+//	OPERATOR[] 
 	reference operator[]( size_type pos )
 	{
 		return (*(_begin + pos));
@@ -146,7 +149,7 @@ class vector
 	{
 		return (*(_begin + pos));
 	}
-//	FRONT TODO
+//	FRONT 
 	reference front()
 	{
 		return (*_begin);
@@ -155,7 +158,7 @@ class vector
 	{
 		return (*_begin);
 	};
-//	BACK TODO
+//	BACK 
 	reference back()
 	{
 		return (*_end);
@@ -164,7 +167,7 @@ class vector
 	{
 		return (*_end);
 	};
-//	DATA TODO
+//	DATA
 	T* data()
 	{
 		if (size() == 0)
@@ -187,19 +190,41 @@ class vector
 //	SIZE
 	size_type size() const
 	{
-		return (ft::distance(this->begin(), this->end()));
+		return _end - _begin;
+		//return (ft::distance(this->cbegin(), this->cend()));
 	};
-//	MAX_SIZE TODO
+//	MAX_SIZE 
 	size_type max_size() const
 	{
-		return (1);
-		//TODO
+		return (_alloc.max_size());
 	};
-//	RESERVE TODO
+//	RESERVE //throz error/change capacity/check if max_size() is exceed
 	void reserve( size_type new_cap)
-	{};
-//	CQPQCITY TODO
-	size_type capacity() const;
+	{
+		if (new_cap > max_size())
+			throw(std::length_error("reserve"));
+		if (new_cap <= capacity())
+			return ;
+		difference_type old_capacity = capacity();
+		pointer old_begin = _begin;
+		pointer save_begin = _begin;
+		pointer old_end = _end;
+		_begin = _alloc.allocate(new_cap);
+		_end = _begin;
+		_capacity = new_cap;
+		while (old_begin != old_end)
+		{
+			end = old_begin;
+			end++;
+			old_begin++;
+		}
+		_alloc.deallocate(save_begin, old_capacity);
+	}
+//	CQPQCITY 
+	size_type capacity() const
+	{
+		return (_capacity);
+	}
 //	CLEAR
 	void clear()
 	{
@@ -224,16 +249,55 @@ void insert( iterator pos, InputIt first, InputIt last )
 		return;
 	};
 //	ERASE TODO
-	iterator erase( iterator pos );
+	iterator erase( iterator pos )
+	{
+	}
 	iterator erase( iterator first, iterator last );
-//	PUSH_BACK TODO
-	void push_back( const T& value );
-//	POP_BACK TODO
-	void pop_back();
-//	RESIZE TODO
-	void resize( size_type count, T value = T() );
+//	PUSH_BACK 
+	void push_back( const T& value )
+	{
+		if ((size() + 1) < capacity())
+		{
+			if (size() == 0)
+				_alloc.allocate(1);
+			else
+				reserve(capacity() * 2);
+		}
+		_end = value;
+		_end++;
+	}
+//	POP_BACK 
+	void pop_back()
+	{
+		_alloc.destroy(_end);
+		_end--;
+	}
+//	RESIZE 
+	void resize( size_type count, T value = T() )
+	{
+		if (size() > count)
+		{
+			_end = _begin + count;
+			_alloc.destroy(_end);
+		}
+		else if (size() < count)
+		{
+			reserve(count);
+			while (size() != count)
+			{
+				_end = value;
+				_end++;
+			}
+		}
+	}
 //	SWAP TODO
-	void swap( vector& other );
+	void swap( vector& other )
+	{
+		vector tmp;
+		tmp = other;
+		other = *this;
+		*this = tmp;
+	}
 	int print_test()
 	{
 		pointer _test = this->_begin;
@@ -258,6 +322,7 @@ void insert( iterator pos, InputIt first, InputIt last )
 		Allocator	_alloc;
 		pointer	_begin;
 		pointer	_end;
+		difference_type _capacity;
 
 };
 template <class T, class Alloc>

@@ -326,7 +326,7 @@ ft::random_access_iterator<T> operator +(const ft::random_access_iterator<T>& lh
 		return tmp -= n;
 	}
 	template <typename T>
-	ft::random_access_iterator<T> operator -(const ft::random_access_iterator<T> lhs, const ft::random_access_iterator<T> rhs)
+	typename ft::random_access_iterator<T>::difference_type operator -(const ft::random_access_iterator<T> &lhs, const ft::random_access_iterator<T> &rhs)
 	{
 		return (&lhs - &rhs);
 	}	
