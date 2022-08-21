@@ -59,3 +59,4 @@ namespace ft{
 	bool operator>=( const ft::stack<T,Container>& lhs, const ft::stack<T,Container>& rhs )
 	{ return (lhs.c >= rhs.c);}
 }
+#endif
