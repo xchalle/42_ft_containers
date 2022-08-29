@@ -33,7 +33,6 @@ namespace ft{
 		}
 		~stack()
 		{
-			c.~Container();
 		}
 		reference top() { return (c.back());}
 		const_reference top() const { return (c.back());}

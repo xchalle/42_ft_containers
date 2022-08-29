@@ -78,7 +78,14 @@ class vector
 			_end++;
 		}
 	}
-//	vector( const vector& other); TODO
+	vector( const vector& other)
+	{
+		_begin = NULL;
+		_end = NULL;
+		_alloc = other.get_allocator();
+		_capacity = 0;
+		insert(begin(), other.begin(), other.end());
+	}
 
 //	ASSIGN TODO
 	void assign( size_type count, const T& value)
@@ -323,7 +330,6 @@ void insert( iterator pos, InputIt first, InputIt last, typename ft::enable_if<!
 					_end++;
 					first++;
 				}
-				_end++;
 				_capacity = count;
 				return ;
 			}
