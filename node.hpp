@@ -21,8 +21,8 @@ class Node
 		~Node()
 		{}
 	private:
-		Node	*_left;
-		Node	*_right;
-		Node	*_inhe;
+		Node	*_left = std::nullptr;
+		Node	*_right = std::nullptr;
+		Node	*_inhe = std::nullptr;
 		T	_pair;
 }
