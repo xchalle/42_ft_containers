@@ -1,84 +1,45 @@
 #include <iterator>
+#include <string>
 #include <iostream>
 #include <vector>
 #include "utils.hpp"
 #include "iterator.hpp"
 #include "vector.hpp"
+#include "stack.hpp"
 
 int main()
 {
-	ft::vector<int> a;
-	//std::cout << ft::enable_if<ft::is_integral<int>::value, bool>::type << std::endl;
-//		std::cout << ft::enable_if<!ft::is_integral<ft::vector<int>>::value, bool>::type << std::endl;
-//		std::cout << std::enable_if<!std::is_integral<std::vector<int>>::value, bool> << std::endl;
-        std::cout << a.size() << std::endl;
-        std::cout << a.capacity() << std::endl;
-        ft::vector<int>::iterator it = a.begin();
-        a.push_back(9);
-        std::cout << a.size() << std::endl;
-        std::cout << a.capacity() << std::endl;
-        std::cout << a[0] << std::endl;
-        a.push_back(8);
-        a.push_back(8);
-        a.push_back(8);
-        a.push_back(8);
-        a.push_back(6);
-        std::cout << a.size() << std::endl;
-        std::cout << a.capacity() << std::endl;
-        std::cout << a[1] << std::endl;
-	a.insert(a.begin() + 2, 10, 9);
-        std::cout << a.size() << std::endl;
-        std::cout << a.capacity() << std::endl;
-        std::cout << a.size() << std::endl;
-	ft::vector<int> b;
-	b.push_back(5);
-	b.push_back(5);
-	b.insert(b.begin() + 1, a.begin(), a.end());
-	std::cout << "A =>" << std::endl;
-	ft::vector<int>::iterator ite = a.end();
-	for ( ft::vector<int>::iterator it = a.begin(); it != ite; it++)
-		std::cout << *it << std::endl;
-	std::cout << "B =>" << std::endl;
-	ft::vector<int>::iterator ite2 = b.end();
-	for ( ft::vector<int>::iterator it2 = b.begin(); it2 != ite2; it2++)
-		std::cout << *it2 << std::endl;
-	//std::cout << *it << std::endl;
-/*	ft::vector<int> vec(9, 1);
-	ft::vector<int> vec2(3, 2);
-	//vec.push_back(8);
-	ft::vector<int>::iterator rit(vec.begin());
-	ft::vector<int>::iterator eit(vec.end());
-	ft::vector<int>::iterator rit2(vec2.begin());
-	ft::vector<int>::iterator eit2(vec2.begin());
-	rit = rit + 6;
-	//vec.insert(rit, 2, (int)6);
-	rit = vec.erase(rit);
-	ft::vector<int>::iterator bit(vec.begin());
-	//rit--;
-	//vec.push_back(8);
-	while (bit != eit)
+	ft::stack<float> other_stack;
+	ft::vector<std::string> lst;
+
+	lst.push_back("salut");
+	lst.push_back("tu vas bien?");
+	lst.push_back("super");
+	lst.push_back("et toi?");
+
+	ft::stack<std::string, ft::vector<std::string> >	my_stack(lst);
+
+	std::cout << std::boolalpha << other_stack.empty() << std::endl;
+	other_stack.push(8.5); // 8.5;
+	other_stack.push(42.4242); // 8.5; 42.4242;
+	std::cout << other_stack.size() << '\n'; // 2
+	other_stack.pop(); // 8.5;
+	std::cout << other_stack.size() << '\n'; // 1
+	other_stack.push(78541.987); // 8.5; 78541.987;
+	std::cout << other_stack.size() << '\n'; // 2
+	std::cout << other_stack.top() << '\n'; //78541.987
+	std::cout << std::boolalpha << other_stack.empty() << std::endl;
+
+	const std::string const_top = my_stack.top();
+
+	std::cout << "const top: " << const_top << '\n';
+
+	while (!my_stack.empty())
 	{
-		std::cout << *bit << std::endl;
-		bit++;
+		std::cout << my_stack.top() << '\n';
+		my_stack.pop();
 	}
-	//std::cout << *rit << std::endl;
-	//rit = rit - 2;
-	//std::cout << *rit << std::endl;*/
-/*	ft::vector<int> vec(6, 8);
-	std::cout << "size=" << vec.size() << std::endl;
-	std::cout << vec.print_test() << std::endl;
-	ft::random_access_iterator<int> ite(vec.begin());
-	std::cout << "test = " << *vec.data() << std::endl;
-	std::cout << *ite << std::endl;
-	ite++;
-	std::cout << *ite << std::endl;
-	ite--;
-	std::cout << *ite << std::endl;
-	ft::reverse_iterator<ft::random_access_iterator<int>> rite(ite);
-	rite--;
-	std::cout << "lala" << *rite << std::endl;
-	rite = rite - 3;
-	std::cout << *rite << std::endl;*/
-	//ft::random_access_iterator<int> ite();
-	//ite = vec.begin();
+
+	return (0);
+
 }

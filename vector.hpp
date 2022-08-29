@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <memory>
 #include <cstddef>
+#include <stdexcept>
 #include "enable_if.hpp"
 #include "is_integral.hpp"
 #include "iterator.hpp"
@@ -49,7 +50,6 @@ class vector
 		InputIt tmp = first;
 		while (tmp != last)
 		{
-			std::cout <<tmp<< std::endl;
 			tmp++;
 			count++;
 		}
@@ -164,11 +164,11 @@ class vector
 //	BACK 
 	reference back()
 	{
-		return (*_end);
+		return (*(_end - 1));
 	};
 	const_reference back() const
 	{
-		return (*_end);
+		return (*(_end - 1));
 	};
 //	DATA
 	T* data()
@@ -193,8 +193,8 @@ class vector
 //	SIZE
 	size_type size() const
 	{
-		return _end - _begin;
-		//return (ft::distance(this->cbegin(), this->cend()));
+		//return _end - _begin;
+		return (ft::distance(begin(), end()));
 	};
 //	MAX_SIZE 
 	size_type max_size() const
@@ -205,7 +205,7 @@ class vector
 	void reserve( size_type new_cap)
 	{
 		if (new_cap > max_size())
-			throw(std::length_error("reserve"));
+			throw(std::length_error("vector::reserve"));
 		if (new_cap <= capacity())
 			return ;
 		difference_type old_capacity = capacity();
@@ -218,6 +218,7 @@ class vector
 		while (old_begin != old_end)
 		{
 			_alloc.construct(_end, *(old_begin));
+			_alloc.destroy(old_begin);
 			_end++;
 			old_begin++;
 		}
@@ -241,7 +242,7 @@ class vector
 	iterator insert( iterator pos, const T& value )
 	{
 		difference_type pos_int = _end - &(*pos);
-		if (size() + 1 > capacity())
+		if (size() + 2 > capacity())
 		{
 			if (size() != 0)
 			{
@@ -258,23 +259,24 @@ class vector
 			}
 
 		}
-		for (int i = 0; i <= pos_int; i++)
+		for (int i = 0; i < pos_int; i++)
 		{
 			_alloc.destroy(_end - i);
 			_alloc.construct(_end - i, *(_end - i - 1));
 		}
 		_alloc.construct(_end - pos_int, value);
 		_end++;
-		return (end() - pos_int);
+
+		return (end() - pos_int - 1);
 	};
 	void insert( iterator pos, size_type count, const T& value )
 	{
 		difference_type pos_int = _end - &(*pos);
-		if (size() + count > capacity())
+		if (size() + count +1> capacity())
 		{
 			if (size() != 0)
 			{
-				reserve(size() + count);
+				reserve(size() + count + 1);
 			}
 			else
 			{
@@ -293,7 +295,7 @@ class vector
 		for (int i = 0; i <= pos_int; i++)
 		{
 			_alloc.destroy(_end - i);
-			_alloc.construct(_end - i + count, *(_end - i - 1));
+			_alloc.construct(_end - i + count, *(_end - i));
 		}
 		for (size_type i = 0; i < count; i++)
 			_alloc.construct(_end - pos_int + i, value);
@@ -305,11 +307,11 @@ void insert( iterator pos, InputIt first, InputIt last, typename ft::enable_if<!
 	{
 		difference_type count = distance(first, last);
 		difference_type pos_int = _end - &(*pos);
-		if (size() + count > capacity())
+		if (size() + count + 1> capacity())
 		{
 			if (size() != 0)
 			{
-				reserve(size() + count);
+				reserve(size() + count + 1);
 			}
 			else
 			{
@@ -329,7 +331,7 @@ void insert( iterator pos, InputIt first, InputIt last, typename ft::enable_if<!
 		for (int i = 0; i <= pos_int; i++)
 		{
 			_alloc.destroy(_end - i);
-			_alloc.construct(_end - i + count, *(_end - i - 1));
+			_alloc.construct(_end - i + count, *(_end - i));
 		}
 		for (int i = 0; i < count; i++)
 		{
@@ -428,16 +430,6 @@ void insert( iterator pos, InputIt first, InputIt last, typename ft::enable_if<!
 		tmp_x = other;
 		other = *this;
 		*this = tmp_x;
-	}
-	int print_test()
-	{
-		pointer _test = this->_begin;
-		while (_test != _end)
-		{
-			std::cout<< *_test<< std::endl;
-			_test++;
-		}
-		return this->tester;
 	}
 //	OPERATOR =
 	vector& operator=(const vector& other)
