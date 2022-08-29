@@ -90,6 +90,7 @@ class vector
 //	ASSIGN TODO
 	void assign( size_type count, const T& value)
 	{
+		_alloc.deallocate(_begin, _capacity);
 		_begin = _alloc.allocate(count);
 		_end = _begin;
 		_capacity = count;
@@ -103,6 +104,7 @@ class vector
 	template <class InputIt>
 	void assign(InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = ft::nullptr_a) //change for distance
 	{
+		_alloc.deallocate(_begin, _capacity);
 		difference_type n = 0;
 		InputIt tmp;
 		tmp = first;

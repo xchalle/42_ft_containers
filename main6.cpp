@@ -134,7 +134,7 @@ int main()
 	BOB.assign(42, 7);
 
 	//ASSIGN RANGE
-/*	std::cout << "\nASSIGN RANGE\n";
+	std::cout << "\nASSIGN RANGE\n";
 	ft::vector<int>	assign_range;
 	assign_range.assign(8, 5);
 	assign_range.assign(BOB.begin() + 1, BOB.end() - 2);
@@ -267,7 +267,7 @@ int main()
 
 
 
-	std::cout << "Size of JOHN " << JOHN.size() << std::endl;
+/*	std::cout << "Size of JOHN " << JOHN.size() << std::endl;
 	if (JOHN.capacity() >= JOHN.size())
 		std::cout << "Capacity of JOHN is sufficient\n";
 	else
