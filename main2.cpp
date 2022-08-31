@@ -59,12 +59,10 @@ class Awesome {
 	std::cout << "cap=" << b.capacity() << std::endl;
 
 */
-	ft::vector<int> a(1, 1);
-	a.insert(a.begin(), 200);
-	a.insert(a.begin(), 200);
-	a.insert(a.begin(), 200);
-	a.insert(a.begin(), 200);
-	ft::vector<int>::iterator it=a.begin();
-	ft::vector<int>::iterator ite=a.end();
+	std::vector<int> a(21, 1);
+	std::vector<int> b(3, 2);
+	a.assign(300, 10); 
+	std::cout << "a cap = " << a.capacity() <<std::endl;
+		std::cout << "b cap = " << b.capacity() <<std::endl;
 }
 

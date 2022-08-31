@@ -44,24 +44,25 @@ class vector
 		_alloc.deallocate(_begin, capacity());
 	}
 	template <class InputIt>
-		vector(InputIt first, InputIt last, const Allocator& alloc = Allocator(), typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = ft::nullptr_a ) : _alloc(alloc), _begin(NULL), _end(NULL)
+		vector(InputIt first, InputIt last, const Allocator& alloc = Allocator(), typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = ft::nullptr_a ) : _alloc(alloc), _begin(NULL), _end(NULL), _capacity(0)
 	{
-		size_type count = 0;
-		InputIt tmp = first;
+		size_type count = distance(first, last);
+		/*InputIt tmp = first;
 		while (tmp != last)
 		{
 			tmp++;
 			count++;
-		}
+		}*/
 		_begin = _alloc.allocate(count);
 		_end = _begin;
-		tmp = first;
+		InputIt tmp = first;
 		while (tmp != last)
 		{
 			_alloc.construct(_end, *tmp);
 			tmp++;
 			_end++;
 		}
+		_capacity = count;
 
 	};
 	explicit vector(size_type count,
