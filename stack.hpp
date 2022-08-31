@@ -30,6 +30,7 @@ namespace ft{
 		stack& operator=( const stack& other )
 		{
 			c = other.c;
+			return (*this);
 		}
 		~stack()
 		{

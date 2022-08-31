@@ -46,77 +46,76 @@ class vector
 	template <class InputIt>
 		vector(InputIt first, InputIt last, const Allocator& alloc = Allocator(), typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = ft::nullptr_a ) : _alloc(alloc), _begin(NULL), _end(NULL), _capacity(0)
 	{
-		size_type count = distance(first, last);
+		size_type count = ft::distance(first, last);
 		/*InputIt tmp = first;
 		while (tmp != last)
-		{
-			tmp++;
-			count++;
-		}*/
-		_begin = _alloc.allocate(count);
-		_end = _begin;
-		InputIt tmp = first;
-		while (tmp != last)
-		{
-			_alloc.construct(_end, *tmp);
-			tmp++;
-			_end++;
-		}
-		_capacity = count;
+			{
+				tmp++;
+				count++;
+			}*/
+			_begin = _alloc.allocate(count);
+			_end = _begin;
+			InputIt tmp = first;
+			while (tmp != last)
+			{
+				_alloc.construct(_end, *tmp);
+				tmp++;
+				_end++;
+			}
+			_capacity = count;
 
-	};
-	explicit vector(size_type count,
-			const T& value = T(),
-			const Allocator& alloc = Allocator()) : _alloc(alloc), _begin(NULL), _end(NULL)
-	{
-		_begin = _alloc.allocate(count);
-		_end = _begin;
-		_capacity = count;
-		while (count > 0)
+		};
+		explicit vector(size_type count,
+				const T& value = T(),
+				const Allocator& alloc = Allocator()) : _alloc(alloc), _begin(NULL), _end(NULL)
 		{
-			_alloc.construct(_end, value);
-			count--;
-			_end++;
+			_begin = _alloc.allocate(count);
+			_end = _begin;
+			_capacity = count;
+			while (count > 0)
+			{
+				_alloc.construct(_end, value);
+				count--;
+				_end++;
+			}
 		}
-	}
-	vector( const vector& other)
-	{
-		_begin = NULL;
-		_end = NULL;
-		_alloc = other.get_allocator();
-		_capacity = 0;
-		insert(begin(), other.begin(), other.end());
-	}
+		vector( const vector& other)
+		{
+			_begin = NULL;
+			_end = NULL;
+			_alloc = other.get_allocator();
+			_capacity = 0;
+			insert(begin(), other.begin(), other.end());
+		}
 
-//	ASSIGN TODO
-	void assign( size_type count, const T& value)
-	{
-		_alloc.deallocate(_begin, _capacity);
-		_begin = _alloc.allocate(count);
-		_end = _begin;
-		_capacity = count;
-		while (count > 0)
+	//	ASSIGN TODO
+		void assign( size_type count, const T& value)
 		{
-			_alloc.construct(_end, value);
-			count--;
-			_end++;
-		}
-	};
-	template <class InputIt>
-	void assign(InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = ft::nullptr_a) //change for distance
+			if (count > capacity())
+			{
+				_alloc.deallocate(_begin, _capacity);
+				_begin = _alloc.allocate(count);
+				_capacity = count;
+			}
+			_end = _begin;
+			while (count > 0)
+			{
+				_alloc.construct(_end, value);
+				count--;
+				_end++;
+			}
+		};
+		template <class InputIt>
+		void assign(InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = ft::nullptr_a) //change for distance
 	{
-		_alloc.deallocate(_begin, _capacity);
-		difference_type n = 0;
-		InputIt tmp;
-		tmp = first;
-		while (tmp != last)
+		size_type count = ft::distance(first, last);
+		if (count > capacity())
 		{
-			tmp++;
-			n++;
+			_alloc.deallocate(_begin, _capacity);
+			_begin = _alloc.allocate(count);
+			_capacity = count;
 		}
-		_begin = _alloc.allocate(n);
 		_end = _begin;
-		_capacity = n;
 		while (first != last)
 		{
 			_alloc.construct(_end, *first);
@@ -309,6 +308,8 @@ class vector
 	};*/
 	void insert( iterator pos, size_type count, const T& value )
 	{
+		if (count == 0)
+			return ;
 		size_type new_size = size() + count;
 		difference_type pos_int = _end - &(*pos);
 		if (new_size > capacity())
@@ -371,7 +372,9 @@ class vector
 template< class InputIt>
 void insert( iterator pos, InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = ft::nullptr_a)
 	{
-		difference_type count = distance(first, last);
+		difference_type count = ft::distance(first, last);
+		if (count == 0)
+			return ;
 		size_type new_size = size() + count;
 		difference_type pos_int = _end - &(*pos);
 		if (new_size > capacity())
@@ -467,17 +470,16 @@ void insert( iterator pos, InputIt first, InputIt last, typename ft::enable_if<!
 		{
 			return (last);
 		}
-		for (; first <= last; first++)
-		{
-			_alloc.destroy(&(*first));
-		}
+		size_type count = ft::distance(first, last);
+		for (; first < last; first++)
+				_alloc.destroy(&(*first));
 		first = tmp;
 		for (int i = 0; i< _end - &(*last); i++)
 		{
 			_alloc.construct(&(*first) + i, *(last + i));
 			_alloc.destroy(&(*last) + i);
 		}
-		_end -= last - first;
+		_end -= count;
 		return(first);
 	}
 //	PUSH_BACK 
