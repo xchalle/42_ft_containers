@@ -58,7 +58,7 @@ class vector
 		tmp = first;
 		while (tmp != last)
 		{
-			_alloc.construct(_end, tmp);
+			_alloc.construct(_end, *tmp);
 			tmp++;
 			_end++;
 		}
@@ -241,24 +241,52 @@ class vector
 //	CLEAR
 	void clear()
 	{
+		//_end--;
 		while (_end != _begin)
 		{
-			_alloc.destroy(_end);
+			//_alloc.destroy(_end);
 			_end--;
 		}
 	};
 //	INSERT 
 	iterator insert( iterator pos, const T& value )
 	{
+		difference_type count = 1;
+		size_type new_size = size() + count;
+		difference_type pos_int = _end - &(*pos);
+		if (new_size > capacity())
+		{
+			if (new_size > max_size())
+				throw(std::length_error("vector::insert"));
+			if (capacity() * 2 > new_size)
+				reserve(size() * 2);
+			else 
+				reserve(new_size);
+		}
+		for (int i = 1; i <= pos_int; i++)
+		{
+	//		if (i!= 0)
+				//_alloc.destroy(_end - i);
+			_alloc.construct(_end - i + count, *(_end - i));
+		}
+		for (int i = 0; i < count; i++)
+			_alloc.construct(_end - pos_int + i, value);
+		_end += count;
+		return (end() - pos_int - 1);
+	}
+	/*iterator insert( iterator pos, const T& value )
+	{
 		difference_type pos_int = _end - &(*pos);
 		if (size() + 2 > capacity())
 		{
 			if (size() != 0)
 			{
-				reserve(size() * 2);
+				while (size() + 1 > capacity())
+					reserve(capacity() * 2);
 			}
 			else
 			{
+				_alloc.deallocate(_begin, capacity());
 				_begin=_alloc.allocate(1);
 				_end = _begin;
 				_alloc.construct(_end, value);
@@ -270,25 +298,52 @@ class vector
 		}
 		for (int i = 0; i < pos_int; i++)
 		{
-			_alloc.destroy(_end - i);
+			//_alloc.destroy(_end - i);
 			_alloc.construct(_end - i, *(_end - i - 1));
 		}
 		_alloc.construct(_end - pos_int, value);
 		_end++;
 
 		return (end() - pos_int - 1);
-	};
+	};*/
 	void insert( iterator pos, size_type count, const T& value )
+	{
+		size_type new_size = size() + count;
+		difference_type pos_int = _end - &(*pos);
+		if (new_size > capacity())
+		{
+			if (new_size > max_size())
+				throw(std::length_error("vector::insert"));
+			if (capacity() * 2 > new_size)
+				reserve(size() * 2);
+			else 
+				reserve(new_size);
+		}
+		//std::cout << capacity() << std::endl;
+		for (int i = 1; i <= pos_int; i++)
+		{
+	//		if (i!= 0)
+				//_alloc.destroy(_end - i);
+			_alloc.construct(_end - i + count, *(_end - i));
+		}
+		for (size_type i = 0; i < count; i++)
+			_alloc.construct(_end - pos_int + i, value);
+		_end += count;
+		return;
+	}
+	/*void insert( iterator pos, size_type count, const T& value )
 	{
 		difference_type pos_int = _end - &(*pos);
 		if (size() + count +1> capacity())
 		{
 			if (size() != 0)
 			{
-				reserve(size() + count + 1);
+				while (size() + 1> capacity())
+					reserve(capacity() * 2);
 			}
 			else
 			{
+				_alloc.deallocate(_begin, capacity());
 				_begin=_alloc.allocate(count);
 				_end = _begin;
 				for (size_type i = 0; i < count; i++)
@@ -303,15 +358,46 @@ class vector
 		}
 		for (int i = 0; i <= pos_int; i++)
 		{
-			_alloc.destroy(_end - i);
+	//		if (i!= 0)
+				//_alloc.destroy(_end - i);
 			_alloc.construct(_end - i + count, *(_end - i));
 		}
 		for (size_type i = 0; i < count; i++)
 			_alloc.construct(_end - pos_int + i, value);
 		_end += count;
 		return ;
-	};
-	template< class InputIt>
+	};*/
+template< class InputIt>
+void insert( iterator pos, InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = ft::nullptr_a)
+	{
+		difference_type count = distance(first, last);
+		size_type new_size = size() + count;
+		difference_type pos_int = _end - &(*pos);
+		if (new_size > capacity())
+		{
+			if (new_size > max_size())
+				throw(std::length_error("vector::insert"));
+			if (capacity() * 2 > new_size)
+				reserve(size() * 2);
+			else 
+				reserve(new_size);
+		}
+		for (int i = 1; i <= pos_int; i++)
+		{
+	//		if (i!= 0)
+				//_alloc.destroy(_end - i);
+			_alloc.construct(_end - i + count, *(_end - i));
+		}
+		for (int i = 0; i < count; i++)
+		{
+			_alloc.construct(_end - pos_int + i, *first);
+			first++;
+		}
+		_end += count;
+		return;
+	}
+
+/*template< class InputIt>
 void insert( iterator pos, InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = ft::nullptr_a)
 	{
 		difference_type count = distance(first, last);
@@ -320,10 +406,12 @@ void insert( iterator pos, InputIt first, InputIt last, typename ft::enable_if<!
 		{
 			if (size() != 0)
 			{
-				reserve(size() + count + 1);
+				while (size() + 1 > capacity())
+					reserve(capacity() * 2);
 			}
 			else
 			{
+				_alloc.deallocate(_begin, capacity());
 				_begin=_alloc.allocate(count);
 				_end = _begin;
 				for (int i = 0; i < count; i++)
@@ -338,7 +426,8 @@ void insert( iterator pos, InputIt first, InputIt last, typename ft::enable_if<!
 		}
 		for (int i = 0; i <= pos_int; i++)
 		{
-			_alloc.destroy(_end - i);
+	//		if (i!= 0)
+				//_alloc.destroy(_end - i);
 			_alloc.construct(_end - i + count, *(_end - i));
 		}
 		for (int i = 0; i < count; i++)
@@ -348,7 +437,7 @@ void insert( iterator pos, InputIt first, InputIt last, typename ft::enable_if<!
 		}
 		_end += count;
 		return;
-	};
+	};*/
 //	ERASE 
 	iterator erase( iterator pos )
 	{
@@ -410,8 +499,8 @@ void insert( iterator pos, InputIt first, InputIt last, typename ft::enable_if<!
 //	POP_BACK 
 	void pop_back()
 	{
-		_alloc.destroy(_end);
 		_end--;
+		_alloc.destroy(_end);
 	}
 //	RESIZE 
 	void resize( size_type count, T value = T() )
@@ -423,7 +512,18 @@ void insert( iterator pos, InputIt first, InputIt last, typename ft::enable_if<!
 		}
 		else if (size() < count)
 		{
-			reserve(count);
+			if (capacity() * 2 > count)
+				reserve(capacity() * 2);
+			else 
+				reserve(count);
+			/*	if (count > max_size())
+					throw(std::length_error("vector::resize"));
+				if (capacity() == 0)
+					reserve(count);
+				if (capacity() * 2 > max_size() && max_size() >= count)
+					reserve(max_size());
+				if (capacity() * 2 < max_size())
+					reserve(capacity() * 2);	*/
 			while (size() != count)
 			{
 				_alloc.construct(_end, value);
@@ -434,10 +534,22 @@ void insert( iterator pos, InputIt first, InputIt last, typename ft::enable_if<!
 //	SWAP TODO
 	void swap( vector& other )
 	{
-		vector tmp_x;
-		tmp_x = other;
-		other = *this;
-		*this = tmp_x;
+		pointer tmp_begin;
+		pointer tmp_end;
+		Allocator tmp_alloc;
+		difference_type tmp_capacity;
+		tmp_begin = _begin;
+		tmp_end = _end;
+		tmp_alloc = _alloc;
+		tmp_capacity = _capacity;
+		_begin = other._begin;
+		_end = other._end;
+		_alloc = other._alloc;
+		_capacity = other._capacity;
+		other._begin = tmp_begin;
+		other._end = tmp_end;
+		other._alloc = tmp_alloc;
+		other._capacity = tmp_capacity;
 	}
 //	OPERATOR =
 	vector& operator=(const vector& other)
@@ -445,6 +557,7 @@ void insert( iterator pos, InputIt first, InputIt last, typename ft::enable_if<!
 		if (*this == other)
 			return *this;
 		this->clear();
+		//_alloc.deallocate(_begin, capacity());
 		this->insert(this->end(), other.begin(), other.end());
 		return (*this);
 	};

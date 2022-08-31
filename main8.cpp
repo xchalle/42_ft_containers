@@ -7,7 +7,7 @@ int main()
 	ft::vector<int> a(4, 6);
 	ft::vector<int> b(2, 8);
 
-	a.swap(b);
+	b.swap(a);
 	ft::vector<int>::iterator it = a.begin();
 	ft::vector<int>::iterator ite = b.begin();
 	while (it != a.end())

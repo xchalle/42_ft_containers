@@ -1,73 +1,70 @@
 #include <iterator>
+#include <string>
 #include <iostream>
 #include <vector>
 #include "utils.hpp"
 #include "iterator.hpp"
 #include "vector.hpp"
 
+class Awesome {
+  
+          public:
+  
+                  Awesome( void ) : _n( 42 ) { std::cout << "Default constructor" << std::endl; } //should not happen too often or else there is a wrong use of allo    cator (which calls the copy constructor)
+                  Awesome( int n ) : _n( n ) { std::cout << "Int constructor" << std::endl; (void)n; }
+                  Awesome( Awesome const &rhs ) : _n( 42 ) { *this = rhs;}
+                  virtual ~Awesome(void) {}
+  
+                  Awesome &operator=( Awesome const & rhs ) { this->_n = rhs._n; return (*this); }
+                  bool operator==( Awesome const & rhs ) const { return (this->_n == rhs._n); }
+                  bool operator!=( Awesome const & rhs ) const { return (this->_n != rhs._n); }
+                  bool operator>( Awesome const & rhs ) const { return (this->_n > rhs._n); }
+                  bool operator<( Awesome const & rhs ) const { return (this->_n < rhs._n); }
+                  bool operator>=( Awesome const & rhs ) const { return (this->_n >= rhs._n); }
+                  bool operator<=( Awesome const & rhs ) const { return (this->_n <= rhs._n); }
+                  void operator+=(int rhs){ _n += rhs; }
+                  int get( void ) const { return this->_n; }
+  
+          private:
+  
+                  int _n;
+  };
+  
+  std::ostream & operator<<( std::ostream & o, Awesome const & rhs ) { o << rhs.get    (); return o; }
+
 	int main ()
 {
-	        ft::vector<int> myvector (3,100);
-        ft::vector<int>::iterator it;
+	/*long a = 1;
+	long b = 1; 
+	a = a ^ b;
+	b = a ^ b;
+	a = a ^ b;
+	std::cout << "a = " << a << std::endl;
+	std::cout << "b = " << b << std::endl;*/
+/*	std::vector<int> a(9, 1);
 
-  it = myvector.begin();
-std::cout << myvector.capacity() << std::endl;
-  it = myvector.insert( it , 200 );
- // std::cout << "myvector contains:";
-//  for (it=myvector.begin(); it<myvector.end(); it++)
-//    std::cout << ' ' << *it;
-//  std::cout << '\n';
-std::cout << myvector.capacity() << std::endl;
-  myvector.insert(it,300);
-std::cout << myvector.capacity() << std::endl;
-  myvector.insert(it,900);
-std::cout << myvector.capacity() << std::endl;
-  myvector.insert(it,500);
+	std::cout << "cap=" << a.capacity() << std::endl;
+	a.insert(a.begin(), 6, 12);
+	std::cout << "cap=" << a.capacity() << std::endl;
+	std::vector<int>::iterator it=a.begin();
+	while (it != a.end())
+	{
+		std::cout << *it << std::endl;
+		it++;
+	}
+	std::cout << "top " << std::endl;
+	std::vector<int> b;
+	std::cout << "cap=" << b.capacity() << std::endl;
+	b.insert(b.begin(), a.begin(), a.end());
+	std::cout << "cap=" << b.capacity() << std::endl;
 
-  // "it" no longer valid, get a new one:
-  it = myvector.begin();
-
-  ft::vector<int> anothervector(2,400);
-  myvector.insert(it+2,anothervector.begin(),anothervector.end());
-
-  int myarray [] = { 501,502,503 };
-  myvector.insert(myvector.begin(), myarray, myarray+3);
-
-  std::cout << "myvector contains:";
-  for (it=myvector.begin(); it<myvector.end(); it++)
-    std::cout << ' ' << *it;
-  std::cout << '\n';
-
-  std::cout << "--DIFF---"<< std::endl;
-
-  std::vector<int> urvector (3,100);
-  std::vector<int>::iterator itu;
-
-  itu = urvector.begin();
-std::cout << urvector.capacity() << std::endl;
-  itu = urvector.insert ( itu , 200 );
-
-std::cout << urvector.capacity() << std::endl;
-  urvector.insert (itu,300);
-std::cout << urvector.capacity() << std::endl;
-  itu = urvector.insert ( itu , 900 );
-std::cout << urvector.capacity() << std::endl;
-  itu = urvector.insert ( itu , 500 );
-
-  // "it" no longer valid, get a new one:
-  itu = urvector.begin();
-
-  std::vector<int> anothervector2 (2,400);
-  urvector.insert (itu+2,anothervector2.begin(),anothervector2.end());
-
-  int urarray [] = { 501,502,503 };
-  urvector.insert (urvector.begin(), urarray, urarray+3);
-
-  std::cout << "urvector contains:";
-  for (itu=urvector.begin(); itu<urvector.end(); itu++)
-    std::cout << ' ' << *itu;
-  std::cout << '\n';
-  return 0;
-
+*/
+	ft::vector<int> a(1, 1);
+	a.insert(a.begin(), 200);
+	a.insert(a.begin(), 200);
+	a.insert(a.begin(), 200);
+	a.insert(a.begin(), 200);
+	ft::vector<int>::iterator it=a.begin();
+	ft::vector<int>::iterator ite=a.end();
 }
 

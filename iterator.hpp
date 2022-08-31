@@ -144,11 +144,11 @@ reverse_iterator<Iter> operator+( typename reverse_iterator<Iter>::difference_ty
 	return (reverse_iterator<Iter>(it.base() - n));
 }
 
-template< class Iter >
+template< class Iterator >
 
-reverse_iterator<Iter> operator-( typename reverse_iterator<Iter>::difference_type n, const reverse_iterator<Iter>& it )
+typename reverse_iterator<Iterator>::difference_type operator-( const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs )
 {
-	return (reverse_iterator<Iter>(it.base() + n));
+	return (rhs.base() - lhs.base());
 }
 
 template< class Iterator1, class Iterator2 >
