@@ -1,12 +1,13 @@
 #ifndef PAIR_HPP
 #define PAIR_HPP
+namespace ft{
 
 template < class T1, class T2>
 struct pair
 {
+	typedef T1 first_type;
+	typedef T2 second_type;
 	public:
-	T1 first;
-	T2 second;
 	pair() : first(), second()
 	{}
 	pair( const T1& x, const T2& y ) : first(x), second(y)
@@ -16,10 +17,13 @@ struct pair
 	{}
 	pair& operator=( const pair& other )
 	{
-		this.first = other.first;
-		this.second = other.second;
+		first = other.first;
+		second = other.second;
 		return (*this);
 	}
+	private:
+	T1 first;
+	T2 second;
 };
 
 template<class T1, class T2>
@@ -61,5 +65,6 @@ template< class T1, class T2 >
 bool operator>=( const std::pair<T1,T2>& lhs, const std::pair<T1,T2>& rhs )
 {
 	return (!(lhs < rhs));
+}
 }
 #endif

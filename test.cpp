@@ -1,14 +1,20 @@
+#include <iterator>
 #include <iostream>
-#include <utility>
+#include <vector>
+#include "utils.hpp"
+#include "iterator.hpp"
+#include "vector.hpp"
 
-int main()
+	int main ()
 {
-	int a1 = 5;
-	int a2 = 4;
-	int b1 = 2;
-	int b2 = 3;
-	std::pair<int, int> n1(a1, b1);
-	std::pair<int, int> n2(a2, b2);
-	if (n1 < n2)
-		std::cout << "cool" << std::endl;
+	try {
+	std::vector<int> a(9, 600);
+	int i = std::distance(a.end(), a.begin());
+	(void)i;
+	}
+	catch(std::exception& e) {std::cout << e.what();}
+
+  return 0;
+
 }
+
