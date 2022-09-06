@@ -21,7 +21,6 @@ struct pair
 		second = other.second;
 		return (*this);
 	}
-	private:
 	T1 first;
 	T2 second;
 };

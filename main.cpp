@@ -6,16 +6,15 @@
 #include <iostream>
 
 int main() {
-  RedBlackTree<ft::pair<int, int>> bst;
-  bst.insert(ft::pair<int, int> (10, 1));
-  bst.insert(65);
-  bst.insert(60);
-  bst.insert(75);
-  bst.insert(57);
+	ft::RedBlackTree<ft::pair<int, int>, int> bst;
+  bst.insert(ft::pair<int, int> (10, 110));
+  bst.insert(ft::pair<int, int> (5, 15));
+  bst.insert(ft::pair<int, int> (7, 17));
+  bst.insert(ft::pair<int, int> (9, 19));
+  bst.insert(ft::pair<int, int> (2, 12));
 
   bst.printTree();
-  cout << endl
-     << "After deleting" << endl;
-  bst.deleteNode(40);
+  std::cout << std::endl
+     << "After deleting" << std::endl;
   bst.printTree();
 }

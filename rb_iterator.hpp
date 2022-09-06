@@ -1,13 +1,15 @@
 #ifndef RB_ITERATOR_HPP
 #define RB_ITERATOR_HPP
-class< typename T, typename Node
-class bidirectional_iterator : public ft::iterator<bidirectional_iterator_tag, T>
+namespace ft{
+template < typename Node, class Compare>
+class bidirectional_iterator : public ft::iterator<bidirectional_iterator_tag, typename Node::data>
 {
-	typedef typename ft::iterator<bidirectional_iterator_tag, T>::iterator_category iterator_category;
-	typedef typename ft::iterator<bidirectional_iterator_tag, T>::value_type value_type;
-	typedef typename ft::iterator<bidirectional_iterator_tag, T>::difference_type difference_type;
-	typedef typename ft::iterator<bidirectional_iterator_tag, T>::reference reference;
-	typedef typename ft::iterator<bidirectional_iterator_tag, T>::pointer pointer;
+	typedef Node *nodeptr;
+	typedef typename ft::iterator<bidirectional_iterator_tag, typename Node::data>::iterator_category iterator_category;
+	typedef typename ft::iterator<bidirectional_iterator_tag, typename Node::data>::value_type value_type;
+	typedef typename ft::iterator<bidirectional_iterator_tag, typename Node::data>::difference_type difference_type;
+	typedef typename ft::iterator<bidirectional_iterator_tag, typename Node::data>::reference reference;
+	typedef typename ft::iterator<bidirectional_iterator_tag, typename Node::data>::pointer pointer;
 	bidirectional_iterator() : _ptr(ft::nullptr_a)
 	{}
 	bidirectional_iterator(pointer ptr) : _ptr(ptr)
@@ -19,8 +21,6 @@ class bidirectional_iterator : public ft::iterator<bidirectional_iterator_tag, T
 		_ptr = rhs._ptr;
 		return (*this);
 	}
-	operator bidirectional_iterator<const T>()
-	{return bidirectional_iterator<const T>(_ptr);}
 
 	~bidirectional_iterator()
 	{};
@@ -36,9 +36,11 @@ class bidirectional_iterator : public ft::iterator<bidirectional_iterator_tag, T
 	}
 	bidirectional_iterator& operator++()
 	{
-		this->_ptr
+		this->_ptr;
 	}
 	private:
 	pointer _ptr;
-	NodePtr _node;
+	nodeptr _node;
+};
 }
+#endif
