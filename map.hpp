@@ -144,7 +144,16 @@ template<
 	{
 		return (_node_alloc.max_size());
 	}
-	//clear
+	//CLEAR
+	//KEY_COMP
+	key_compare key_comp() const
+	{
+		return _comp;
+	}
+	value_compare value_comp() const
+	{
+		return value_compare(_comp);
+	}
 	
 	private:
 	typedef std::allocator<Node<ft::pair<const Key, T> > > node_allocator;
