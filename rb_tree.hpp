@@ -1,7 +1,6 @@
 #ifndef AVL_TREE_HPP
 #define AVL_TREE_HPP
 
-// Implementing Red-Black Tree in C++
 
 #include <iostream>
 #include "utils.hpp"
@@ -10,10 +9,11 @@
 namespace ft{
 template <typename T>
 struct Node {
+	typedef T value_type;
   T data;
-  Node<T> *parent;
-  Node<T> *left;
-  Node<T> *right;
+  Node *parent;
+  Node *left;
+  Node *right;
   bool color;
 };
 }

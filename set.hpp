@@ -1,5 +1,5 @@
-#ifndef MAP_HPP
-#define MAP_HPP
+#ifndef SET_HPP
+#define SET_HPP
 
 #include <iostream>
 #include "utils.hpp"
@@ -11,19 +11,17 @@
 namespace ft{
 template<
 class Key,
-class T,
 class Compare = std::less<Key>,
-class Allocator = std::allocator<ft::pair<const Key, T> >
-> class map
+class Allocator = std::allocator<Key>
+> class set
 {
 	public:
 		typedef Key key_type;
-		typedef T mapped_type;
-		typedef typename ft::pair<const Key, T> value_type;
-		typedef Node<value_type> *nodeptr;
+		typedef Key value_type;
 		typedef std::size_t size_type;
 		typedef std::ptrdiff_t difference_type;
 		typedef Compare key_compare;
+		typedef Compare value_compare;
 		typedef Allocator allocator_type;
 		typedef value_type& reference;
 		typedef const value_type& const_reference;
@@ -34,8 +32,11 @@ class Allocator = std::allocator<ft::pair<const Key, T> >
 		class iterator;
 		typedef ft::reverse_iterator<iterator> reverse_iterator;
 		//	typedef ft::const_reverse_iterator<const_iterator> const_reverse_iterator;
-		typedef std::allocator<Node<ft::pair<const Key, T> > > node_allocator;
+	protected:
+		typedef Node<value_type> *nodeptr;
+		typedef std::allocator<Node<value_type> > node_allocator;
 
+	public:
 		nodeptr _root;
 		nodeptr _TNULL;
 		key_compare _comp;
@@ -43,23 +44,6 @@ class Allocator = std::allocator<ft::pair<const Key, T> >
 		node_allocator _node_alloc;
 		
 
-		//VALUE_COMPARE TODO
-		class value_compare : public std::binary_function<value_type, value_type, bool>
-		{
-			typedef bool result_type;
-			typedef value_type first_argument_type;
-			typedef value_type second_argument_type;
-
-			protected :
-			value_compare( Compare c) : _comp(c)
-			{
-			}
-			Compare _comp;
-			result_type operator() ( const value_type& lhs, const value_type& rhs) const
-			{
-				return _comp(lhs.first, rhs.first);
-			}
-		};
 
 		class iterator : public ft::iterator<bidirectional_iterator_tag, pointer>
 		{
@@ -86,7 +70,7 @@ class Allocator = std::allocator<ft::pair<const Key, T> >
 			{return this->_node.val;}
 			reference operator*() const
 			{
-				return *(_node->data);
+				return (_node->data);
 			}
 			pointer operator->() const
 			{
@@ -94,25 +78,33 @@ class Allocator = std::allocator<ft::pair<const Key, T> >
 			}
 			iterator& operator++()
 			{
-				this->_node = successor(_node);
+				_node = successor(_node);
 				return (*this);
 			}
-			iterator& operator++(int)
+			iterator operator++(int)
 			{
-				iterator tmp(*this);
-				this->_node = successor(_node);
+				iterator tmp = *this;
+				++*this;
 				return (tmp);
 			}
 			iterator& operator--()
 			{
-				this->_node = predecessor(_node);
+				_node = predecessor(_node);
 				return (*this);
 			}
-			iterator& operator--(int)
+			iterator operator--(int)
 			{
-				iterator tmp(*this);
-				this->_node = predecessor(_node);
+				iterator tmp = *this;
+				--*this;
 				return (tmp);
+			}
+			bool operator==(/*const_*/iterator const &rhs) const
+			{
+				return _node == rhs._node;
+			}
+			bool operator!=(/*const_*/iterator const &rhs) const
+			{
+				return _node != rhs._node;
 			}
 			private:
 			nodeptr _node;
@@ -121,22 +113,22 @@ class Allocator = std::allocator<ft::pair<const Key, T> >
 
 
 		//CONSTRUCTOR TODO
-		map() : _comp(key_compare()), _alloc(Allocator())
+		set() : _comp(key_compare()), _alloc(Allocator())
 		{
 			RedBlackTree();
 		}
-		explicit map( const Compare& comp,
+		explicit set( const Compare& comp,
 				const Allocator& alloc = Allocator() ) : _comp(comp), _alloc(alloc)
 		{
 			RedBlackTree();
 		}
 		//DESTRUCTOR
-		~map()
+		~set()
 		{}
 
 
 		//OPERTOR=
-		map& operator=(const map& other)
+		set& operator=(const set& other)
 		{
 			if (*this == other)
 				return (*this);
@@ -147,27 +139,6 @@ class Allocator = std::allocator<ft::pair<const Key, T> >
 		}
 		//GET_ALLOCATOR
 		allocator_type get_allocator() const {return (_alloc);}
-		//AT
-		mapped_type& at( const Key& key ) 
-		{
-			nodeptr node = searchTree(key);
-			if (node == _TNULL)
-				throw std::out_of_range("exception at operation is out of range");
-			return (node->data.second);
-		}
-		const mapped_type& at( const Key& key ) const 
-		{
-			nodeptr node = searchTree(key);
-			if (node == _TNULL)
-				throw std::out_of_range("exception at operation is out of range");
-			return (node->data.second);
-		}
-		//OPERATOR []
-		mapped_type& operator[] (const Key& key)
-		{
-			nodeptr node = searchTree(key);
-			return (node->data.second);
-		}
 		//BEGIN//cosnt_fct TODO
 		iterator begin()
 		{
@@ -297,12 +268,12 @@ std::cout << node->data << " ";
 }
 }
 
-nodeptr searchTreeHelper(nodeptr node, T key) {
-if (node == _TNULL || key == node->data.first) {
+nodeptr searchTreeHelper(nodeptr node, value_type key) {
+if (node == _TNULL || key == node->data) {
 return node;
 }
 
-if (_comp(key, node->data.first)) {
+if (_comp(key, node->data)) {
 return searchTreeHelper(node->left, key);
 }
 return searchTreeHelper(node->right, key);
@@ -380,7 +351,7 @@ u->parent->right = v;
 v->parent = u->parent;
 }
 
-void deleteNodeHelper(nodeptr node, T key) {
+void deleteNodeHelper(nodeptr node, value_type key) {
 nodeptr z = _TNULL;
 nodeptr x, y;
 while (node != _TNULL) {
@@ -479,12 +450,10 @@ _root->color = 0;
 
 void test()
 {
-		ft::pair<int, int> t;
-		ft::map<int, int>::iterator tmp = root();
-	while (*tmp != ft::nullptr_a)
+		ft::set<int>::iterator tmp = root();
+	while (tmp != end())
 	{
-		t = *tmp;
-		std::cout << t.second << std::endl;
+		std::cout << *tmp << std::endl;
 		tmp++;
 	}
 }
@@ -504,7 +473,7 @@ if (_root != ft::nullptr_a)
 	}
 
 	std::string sColor = __root->color ? "RED" : "BLACK";
-	std::cout << __root->data.first << "(" << sColor << ")" << std::endl;
+	std::cout << __root->data << "(" << sColor << ")" << std::endl;
 	printHelper(_root->left, indent, false);
 	printHelper(_root->right, indent, true);
 }
@@ -614,7 +583,7 @@ x->parent = y;
 
 // Inserting a node
 //template<class T1, class T2>
-void insert(ft::pair<const Key, T> duo) {
+void insert(key_type duo) {
 nodeptr node = _node_alloc.allocate(1);
 node->parent = ft::nullptr_a;
 _alloc.construct(&node->data, duo);
@@ -627,7 +596,7 @@ nodeptr x = this->_root;
 
 while (x != _TNULL) {
 y = x;
-if (_comp(node->data.first, x->data.first)) {
+if (_comp(node->data, x->data)) {
 x = x->left;
 } else {
 x = x->right;
@@ -637,7 +606,7 @@ x = x->right;
 node->parent = y;
 if (y == ft::nullptr_a) {
 _root = node;
-} else if (_comp(node->data.first, y->data.first)) {
+} else if (_comp(node->data, y->data)) {
 y->left = node;
 } else {
 y->right = node;
@@ -658,12 +627,12 @@ insertFix(node);
 nodeptr getRoot() {
 return this->_root;
 }
-void deleteNode(T data) {
+void deleteNode(value_type data) {
 deleteNodeHelper(this->_root, data);
 }
 
 void deleteRoot() {
-deleteNodeHelper(this->_root, _root->data.first);
+deleteNodeHelper(this->_root, _root->data);
 }
 void printTree() {
 if (_root) {
