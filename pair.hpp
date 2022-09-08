@@ -8,6 +8,8 @@ struct pair
 	typedef T1 first_type;
 	typedef T2 second_type;
 	public:
+	first_type first;
+	second_type second;
 	pair() : first(), second()
 	{}
 	pair( const T1& x, const T2& y ) : first(x), second(y)
@@ -17,12 +19,10 @@ struct pair
 	{}
 	pair& operator=( const pair& other )
 	{
-		first = other.first;
 		second = other.second;
+		first = other.first;
 		return (*this);
 	}
-	T1 first;
-	T2 second;
 };
 
 template<class T1, class T2>
