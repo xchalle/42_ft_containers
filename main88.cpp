@@ -1,7 +1,7 @@
 #include <utility>
 #include <map>
 #include <iostream>
-#include "map.hpp"
+//#include "map.hpp"
 #include "set.hpp"
 
 int main()
@@ -12,6 +12,9 @@ int main()
 	a.insert(9);
 	a.insert(6);
 	a.insert(7);
+	a.insert(17);
+	a.insert(0);
+	a.insert(2);
 //	ft::map<int, int> a;
 //	ft::pair<int , int> b(1, 9);
 //	ft::pair<int , int> c(8, 19);
@@ -21,6 +24,6 @@ int main()
 //	a.insert(c);
 //	a.insert(d);
 //	a.insert(u);
-	a.printTree();
+//	a.printTree();
 	a.test();
 }

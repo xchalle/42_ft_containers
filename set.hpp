@@ -78,7 +78,29 @@ class Allocator = std::allocator<Key>
 			}
 			iterator& operator++()
 			{
-				_node = successor(_node);
+				if (_node->right != ft::nullptr_a)
+				{
+					std::cout << "la" << std::endl;
+					while (_node->left != ft::nullptr_a) {
+					_node = _node->left;
+					}
+				//	return node;
+			//	_node = minimum(_node->right);
+					return *this;
+				}
+
+				std::cout << "lo" << std::endl;
+				nodeptr y = _node->parent;
+				std::cout << "lp" << std::endl;
+				while (y != ft::nullptr_a && _node == y->right) {
+				std::cout << "lr" << std::endl;
+				_node = y;
+				std::cout << "lt" << std::endl;
+				y = y->parent;
+				}
+				std::cout << "ly" << std::endl;
+				_node = y;
+//				_node = successor(_node);
 				return (*this);
 			}
 			iterator operator++(int)
@@ -89,7 +111,23 @@ class Allocator = std::allocator<Key>
 			}
 			iterator& operator--()
 			{
-				_node = predecessor(_node);
+				if (_node->left != ft::nullptr_a)
+				{
+					while (_node->right != ft::nullptr_a) {
+					_node = _node->right;
+					}
+				//return maximum(_node->left);
+					return *this;
+				}
+
+				nodeptr y = _node->parent;
+				while (y != ft::nullptr_a && _node == y->left) {
+				_node = y;
+				y = y->parent;
+				}
+
+				_node = y;
+			//	_node = predecessor(_node);
 				return (*this);
 			}
 			iterator operator--(int)
@@ -586,7 +624,8 @@ x->parent = y;
 void insert(key_type duo) {
 nodeptr node = _node_alloc.allocate(1);
 node->parent = ft::nullptr_a;
-_alloc.construct(&node->data, duo);
+node->data = _alloc.allocate(1);
+_alloc.construct(node->data, duo);
 node->left = _TNULL;
 node->right = _TNULL;
 node->color = 1;
@@ -596,7 +635,7 @@ nodeptr x = this->_root;
 
 while (x != _TNULL) {
 y = x;
-if (_comp(node->data, x->data)) {
+if (_comp(*(node->data), *(x->data))) {
 x = x->left;
 } else {
 x = x->right;
@@ -606,7 +645,7 @@ x = x->right;
 node->parent = y;
 if (y == ft::nullptr_a) {
 _root = node;
-} else if (_comp(node->data, y->data)) {
+} else if (_comp(*(node->data), *(y->data))) {
 y->left = node;
 } else {
 y->right = node;
