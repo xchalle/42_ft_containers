@@ -281,7 +281,7 @@ node->color = 0;
 
 // Preorder
 void preOrderHelper(nodeptr node) {
-if (node != _TNULL) {
+if (node != ft::nullptr_a) {
 std::cout << node->data << " ";
 preOrderHelper(node->left);
 preOrderHelper(node->right);
@@ -290,7 +290,7 @@ preOrderHelper(node->right);
 
 // Inorder
 void inOrderHelper(nodeptr node) {
-if (node != _TNULL) {
+if (node != ft::nullptr_a) {
 inOrderHelper(node->left);
 std::cout << node->data << " ";
 inOrderHelper(node->right);
@@ -299,7 +299,7 @@ inOrderHelper(node->right);
 
 // Post order
 void postOrderHelper(nodeptr node) {
-if (node != _TNULL) {
+if (node != ft::nullptr_a) {
 postOrderHelper(node->left);
 postOrderHelper(node->right);
 std::cout << node->data << " ";
@@ -307,7 +307,7 @@ std::cout << node->data << " ";
 }
 
 nodeptr searchTreeHelper(nodeptr node, value_type key) {
-if (node == _TNULL || key == node->data) {
+if (node == ft::nullptr_a || key == node->data) {
 return node;
 }
 
@@ -390,9 +390,9 @@ v->parent = u->parent;
 }
 
 void deleteNodeHelper(nodeptr node, value_type key) {
-nodeptr z = _TNULL;
+nodeptr z = ft::nullptr_a;
 nodeptr x, y;
-while (node != _TNULL) {
+while (node != ft::nullptr_a) {
 if (node->data == key) {
 z = node;
 }
@@ -404,17 +404,17 @@ node = node->left;
 }
 }
 
-if (z == _TNULL) {
+if (z == ft::nullptr_a) {
 std::cout << "Key not found in the tree" << std::endl;
 return;
 }
 
 y = z;
 int y_original_color = y->color;
-if (z->left == _TNULL) {
+if (z->left == ft::nullptr_a) {
 x = z->right;
 rbTransplant(z, z->right);
-} else if (z->right == _TNULL) {
+} else if (z->right == ft::nullptr_a) {
 x = z->left;
 rbTransplant(z, z->left);
 } else {
@@ -518,12 +518,10 @@ if (_root != ft::nullptr_a)
 }
 
 nodeptr RedBlackTree() {
-_TNULL = _node_alloc.allocate(1);
-_TNULL->color = 0;
-_TNULL->left = ft::nullptr_a;
-_TNULL->right = ft::nullptr_a;
-_root = _TNULL;
-return _root;
+_root = _node_alloc.allocate(1);
+_root->color = 0;
+_root->left = ft::nullptr_a;
+_root->right = ft::nullptr_a;
 }
 
 void preorder() {
@@ -543,26 +541,26 @@ return searchTreeHelper(this->_root, key);
 }
 
 nodeptr minimum(nodeptr node) {
-while (node->left != _TNULL) {
+while (node->left != ft::nullptr_a) {
 node = node->left;
 }
 return node;
 }
 
 nodeptr maximum(nodeptr node) {
-while (node->right != _TNULL) {
+while (node->right != ft::nullptr_a) {
 node = node->right;
 }
 return node;
 }
 
 nodeptr successor(nodeptr x) {
-if (x->right != _TNULL) {
+if (x->right != ft::nullptr_a) {
 return minimum(x->right);
 }
 
 nodeptr y = x->parent;
-while (y != _TNULL && x == y->right) {
+while (y != ft::nullptr_a && x == y->right) {
 x = y;
 y = y->parent;
 }
@@ -570,12 +568,12 @@ return y;
 }
 
 nodeptr predecessor(nodeptr x) {
-if (x->left != _TNULL) {
+if (x->left != ft::nullptr_a) {
 return maximum(x->left);
 }
 
 nodeptr y = x->parent;
-while (y != _TNULL && x == y->left) {
+while (y != ft::nullptr_a && x == y->left) {
 x = y;
 y = y->parent;
 }
@@ -586,7 +584,7 @@ return y;
 void leftRotate(nodeptr x) {
 nodeptr y = x->right;
 x->right = y->left;
-if (y->left != _TNULL) {
+if (y->left != ft::nullptr_a) {
 y->left->parent = x;
 }
 y->parent = x->parent;
@@ -604,7 +602,7 @@ x->parent = y;
 void rightRotate(nodeptr x) {
 nodeptr y = x->left;
 x->left = y->right;
-if (y->right != _TNULL) {
+if (y->right != ft::nullptr_a) {
 y->right->parent = x;
 }
 y->parent = x->parent;
@@ -626,14 +624,14 @@ nodeptr node = _node_alloc.allocate(1);
 node->parent = ft::nullptr_a;
 node->data = _alloc.allocate(1);
 _alloc.construct(node->data, duo);
-node->left = _TNULL;
-node->right = _TNULL;
+node->left = ft::nullptr_a;
+node->right = ft::nullptr_a;
 node->color = 1;
 
 nodeptr y = ft::nullptr_a;
 nodeptr x = this->_root;
 
-while (x != _TNULL) {
+while (x != ft::nullptr_a) {
 y = x;
 if (_comp(*(node->data), *(x->data))) {
 x = x->left;

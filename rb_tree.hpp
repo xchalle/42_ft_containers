@@ -10,14 +10,14 @@ namespace ft{
 template <typename T>
 struct Node {
 	typedef T value_type;
-  T* data;
+  T data;
   Node *parent;
   Node *left;
   Node *right;
   bool color;
 };
 
-template< class Key, class Compare = std::less<Key>, class Allocator = std::allocator<Key> >
+/*template< class Key, class Compare = std::less<Key>, class Allocator = std::allocator<Key> >
 class rb_tree
 {
 	typedef Allocator allocator_type;
@@ -36,11 +36,34 @@ class rb_tree
 		_root->right = ft::nullptr_a;
 
 	}
+	add_node(Key val)
+	{
+		nodeptr node = _node_alloc.allocate(1);
+		node->parent = ft::nullptr_a;
+		node->color = 1;
+		node->left = ft::nullptr_a;
+		node->right = ft::nullptr_a;
+		node->data = _alloc.allocate(1);
+		_alloc.construct(&node->data, val);
+
+		nodeptr y = ft::nullptr_a;
+		nodeptr x = _root;
+
+		while( x != ft::nullptr_a)
+		{
+			y = x;
+			if (_comp(node->data, y->data))
+				x = x->left;
+			else
+				x = x->right;
+		}
+		node->parent = y;
+	}
 	node_allocator _node_alloc;
 	allocator_type _alloc;
 	nodeptr _root;
 	nodeptr _save;
 	nodeptr _NULL;
-}
+}*/
 }
 #endif
