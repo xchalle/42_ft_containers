@@ -15,6 +15,12 @@ int main()
 	a.insert(17);
 	a.insert(0);
 	a.insert(2);
+	ft::set<int>::iterator it = a.begin();
+	while (it != a.end())
+	{
+		std::cout << *it << std::endl;
+		it++;
+	}
 //	ft::map<int, int> a;
 //	ft::pair<int , int> b(1, 9);
 //	ft::pair<int , int> c(8, 19);
@@ -25,5 +31,4 @@ int main()
 //	a.insert(d);
 //	a.insert(u);
 //	a.printTree();
-	a.test();
 }
