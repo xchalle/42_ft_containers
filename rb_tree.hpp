@@ -29,7 +29,7 @@ struct node {
 	{}
 	~node()
 	{}
-	noderef operator=(const noderef rhs)
+	noderef operator=(const node& rhs)
 	{
 		if (*this == rhs)
 			return *this;
@@ -40,7 +40,7 @@ struct node {
 		data = rhs.data;
 		return *this;
 	}
-	bool operator==(const noderef rhs)
+	bool operator==(const node& rhs)
 	{
 		return (data == rhs.data);
 	}
@@ -183,6 +183,7 @@ template <typename T, class Compare,
 
 		pointer		get_root() const { return _root; }
 		pointer		get_end() const { return _end; }
+		const_pointer		get_cend() const { return _end; }
 
 		bool	delete_node(const value_type& key)
 		{ return __delete_node_wrapper(_root, key); }

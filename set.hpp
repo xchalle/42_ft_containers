@@ -5,6 +5,8 @@
 #include "utils.hpp"
 #include "pair.hpp"
 #include "rb_tree.hpp"
+#include "enable_if.hpp"
+#include "is_integral.hpp"
 #include "rb_iterator.hpp"
 
 
@@ -27,11 +29,11 @@ class Allocator = std::allocator<Key>
 		typedef const value_type& const_reference;
 		typedef typename Allocator::pointer pointer;
 		typedef typename Allocator::const_pointer const_pointer;
-		typedef ft::bidirectional_iterator<node< value_type>, key_compare> iterator;
-		//	typedef ft::const_bidirectional_iterator<Node<const T>, key_compare> const_iterator;
+		typedef ft::const_bidirectional_iterator<node< value_type>, key_compare> iterator;
+		typedef ft::const_bidirectional_iterator<node<const value_type>, key_compare> const_iterator;
 		//class iterator;
 		typedef ft::reverse_iterator<iterator> reverse_iterator;
-		//	typedef ft::const_reverse_iterator<const_iterator> const_reverse_iterator;
+		typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 	protected:
 		typedef node<value_type> *nodeptr;
 
@@ -48,6 +50,15 @@ class Allocator = std::allocator<Key>
 				const Allocator& alloc = Allocator() ) : _comp(comp), _alloc(alloc)
 		{
 		}
+		template < class InputIt>
+			set( InputIt first, InputIt last, const Compare &comp = Compare(), const Allocator& alloc = Allocator()) : _comp(comp), _alloc(alloc)
+			{
+				while (first != last)
+				{
+					_rbt.insert(*first);
+					first++;
+				}
+			}
 		//DESTRUCTOR
 		~set()
 		{}
@@ -68,47 +79,43 @@ class Allocator = std::allocator<Key>
 		//BEGIN//cosnt_fct TODO
 		iterator begin()
 		{
-			return (iterator(_rbt.min()));
+			return (iterator(_rbt.min(), _rbt.get_end()));
 		}
-		/*
 		const_iterator begin() const 
 		{
-			return (iterator(_rbt.min()));
+			return (const_iterator(_rbt.min(), _rbt.get_end()));
 		}
-		*/
 		//END//cosnt_fct TODO
 		iterator end()
 		{
-			return (iterator(_rbt.max()));
+			return (iterator(_rbt.get_end(), _rbt.get_end()));
 		}
 		//iterator root()
 		//{
 		//	return (_root);
 		//}
-		/*
-		 * const_iterator end() const
+		const_iterator end() const
 		{
-			return (iterator(max()));
+			return (const_iterator(_rbt.get_end(), _rbt.get_end()));
 		}
-		*/
 		//RBEGIN//cosnt_fct TODO
-		/*reverse_iterator rbegin()
+		reverse_iterator rbegin()
 		{
-			return (maximum(_root));
+			return (reverse_iterator(end()));
 		}
 		const_reverse_iterator rbegin() const
 		{
-			return (maximum(_root));
+			return (const_reverse_iterator(end()));
 		}
 		//REND //cosnt_fct TODO
 		reverse_iterator rend()
 		{
-			return (minimum(_root));
+			return (reverse_iterator(begin()));
 		}
 		const_reverse_iterator rend() const
 		{
-			return (minimum(_root));
-		}*/
+			return (const_reverse_iterator(begin()));
+		}
 		//EMPTY
 		bool empty() const
 		{
@@ -135,15 +142,16 @@ class Allocator = std::allocator<Key>
 		ft::pair<iterator, bool> insert(const value_type& value)
 		{
 			bool tmp = _rbt.insert(value);
-			return (ft::pair<iterator, bool>(iterator(_rbt.search(value)), tmp));
+			return (ft::pair<iterator, bool>(iterator(_rbt.search(value), _rbt.get_end()), tmp));
 		}
 		iterator insert(iterator hint, const value_type& value)
 		{
+			(void)hint;
 			_rbt.insert(value);
-			return(iterator(_rbt.search(value)));
+			return(iterator(_rbt.search(value), _rbt.get_end()));
 		}
 		template<class InputIt>
-		void insert(InputIt first, InputIt last, , typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = ft::nullptr_a)
+		void insert(InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = ft::nullptr_a)
 		{
 			while(first != last)
 			{
@@ -155,7 +163,7 @@ class Allocator = std::allocator<Key>
 		iterator erase(iterator pos)
 		{
 			_rbt.delete_node(*pos);
-			return ;
+			return end();
 		}
 		iterator erase(iterator first, iterator last)
 		{
@@ -164,7 +172,7 @@ class Allocator = std::allocator<Key>
 				_rbt.delete_node(*first);
 				first++;
 			}
-			return ;
+			return end();
 		}
 		size_type erase (const Key& key)
 		{
@@ -172,8 +180,13 @@ class Allocator = std::allocator<Key>
 				return 1;
 			return 0;
 		}
+		//SWAP
+		void swap(set &other)
+		{
+			_rbt.swap(other._rbt);
+		}
 		//KEY_COMP
-		key_compare key_comp() const
+		/*key_compare key_comp() const
 		{
 			return _comp;
 		}
@@ -181,7 +194,7 @@ class Allocator = std::allocator<Key>
 		value_compare value_comp() const
 		{
 			return value_compare(_comp);
-		}
+		}*/
 		//COUNT
 		size_type count( const Key& key) const
 		{
@@ -192,7 +205,47 @@ class Allocator = std::allocator<Key>
 		//FIND
 		iterator find( const Key& key)
 		{
-			return(iterator(searchTree(key)));
+			return(iterator(_rbt.search(key), _rbt.get_end()));
+		}
+		const_iterator find( const Key& key) const
+		{
+			return(const_iterator(_rbt.search(key), _rbt.get_end()));
+		}
+		//LOWER_BOUND
+		iterator lower_bound( const Key& key)
+		{
+			return (iterator(_rbt.lower_bound(key), _rbt.get_end()));
+		}
+		const_iterator lower_bound( const Key& key) const
+		{
+			return (const_iterator(_rbt.lower_bound(key), _rbt.get_end()));
+		}
+		iterator upper_bound( const Key& key)
+		{
+			return (iterator(_rbt.upper_bound(key), _rbt.get_end()));
+		}
+		const_iterator upper_bound( const Key& key) const
+		{
+			return (const_iterator(_rbt.upper_bound(key), _rbt.get_end()));
+		}
+		//EQUAL_RANGE
+		ft::pair<iterator, iterator> equal_range(const Key& key)
+		{
+			return (ft::pair<iterator, iterator>(lower_bound(key), upper_bound(key)));
+		}
+		ft::pair<const_iterator, const_iterator> equal_range(const Key& key) const
+		{
+			return (ft::pair<const_iterator, const_iterator>(lower_bound(key), upper_bound(key)));
+		}
+		//KEY_COMP
+		key_compare key_comp() const
+		{
+			return (_comp);
+		}
+		//VALUE_COMP
+		value_compare value_comp() const
+		{
+			return (_comp);
 		}
 };
 }

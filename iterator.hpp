@@ -49,6 +49,7 @@ template <class Category,
 	typedef T value_type;
 	typedef Distance difference_type;
 	typedef Pointer pointer;
+	typedef const Pointer const_pointer;
 	typedef Reference reference;
 };
 
