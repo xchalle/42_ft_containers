@@ -30,7 +30,7 @@ class Allocator = std::allocator<Key>
 		typedef typename Allocator::pointer pointer;
 		typedef typename Allocator::const_pointer const_pointer;
 		typedef ft::const_bidirectional_iterator<node< value_type>, key_compare> iterator;
-		typedef ft::const_bidirectional_iterator<node<const value_type>, key_compare> const_iterator;
+		typedef ft::const_bidirectional_iterator<node< value_type>, key_compare> const_iterator;
 		//class iterator;
 		typedef ft::reverse_iterator<iterator> reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
@@ -61,7 +61,11 @@ class Allocator = std::allocator<Key>
 			}
 		//DESTRUCTOR
 		~set()
-		{}
+		{ 
+			_rbt.destroy();
+			_rbt.destroy_end();
+
+		}
 
 
 		//OPERTOR=
@@ -142,7 +146,7 @@ class Allocator = std::allocator<Key>
 		ft::pair<iterator, bool> insert(const value_type& value)
 		{
 			bool tmp = _rbt.insert(value);
-			return (ft::pair<iterator, bool>(iterator(_rbt.search(value), _rbt.get_end()), tmp));
+			return (ft::make_pair<iterator, bool>(iterator(_rbt.search(value), _rbt.get_end()), tmp));
 		}
 		iterator insert(iterator hint, const value_type& value)
 		{
@@ -168,10 +172,7 @@ class Allocator = std::allocator<Key>
 		iterator erase(iterator first, iterator last)
 		{
 			while (first != last)
-			{
-				_rbt.delete_node(*first);
-				first++;
-			}
+				_rbt.delete_node(*(first++));
 			return end();
 		}
 		size_type erase (const Key& key)
@@ -248,6 +249,50 @@ class Allocator = std::allocator<Key>
 			return (_comp);
 		}
 };
+
+	template< class Key , class Compare, class Alloc >
+	bool operator==( const ft::set<Key, Compare, Alloc>& lhs, const ft::set<Key, Compare, Alloc>& rhs)
+	{
+		if (ft::equal(lhs.begin(), lhs.end(), rhs.begin()))
+			return true;
+		return false;
+
+	}
+	template< class Key , class Compare, class Alloc >
+	bool operator!=( const ft::set<Key, Compare, Alloc>& lhs, const ft::set<Key, Compare, Alloc>& rhs)
+	{
+		if(lhs == rhs)
+			return false;
+		return true;
+	}
+	template< class Key , class Compare, class Alloc >
+	bool operator<( const ft::set<Key, Compare, Alloc>& lhs, const ft::set<Key, Compare, Alloc>& rhs)
+	{
+		if(lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()))
+			return true;
+		return false;
+	}
+	template< class Key , class Compare, class Alloc >
+	bool operator<=( const ft::set<Key, Compare, Alloc>& lhs, const ft::set<Key, Compare, Alloc>& rhs)
+	{
+		if(lhs < rhs || lhs == rhs)
+			return true;
+		return false;
+	}
+	template< class Key , class Compare, class Alloc >
+	bool operator>( const ft::set<Key, Compare, Alloc>& lhs, const ft::set<Key, Compare, Alloc>& rhs)
+	{
+		if (lhs <= rhs)
+			return false;
+		return true;
+	}
+	template< class Key , class Compare, class Alloc >
+	bool operator>=( const ft::set<Key, Compare, Alloc>& lhs, const ft::set<Key, Compare, Alloc>& rhs)
+	{
+		if (lhs < rhs)
+			return false;
+		return true;
+	}
 }
 
 #endif 

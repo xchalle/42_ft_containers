@@ -23,6 +23,8 @@ struct pair
 		first = other.first;
 		return (*this);
 	}
+	~pair()
+	{}
 };
 
 template<class T1, class T2>

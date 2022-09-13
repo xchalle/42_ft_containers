@@ -136,7 +136,7 @@ class const_bidirectional_iterator : public ft::iterator<bidirectional_iterator_
 			_node = NULL;
 			return (*this);
 		}
-		this->_node = _node->predecessor(_node);
+		this->_node = predecessor(_node);
 		return (*this);
 	}
 	const_bidirectional_iterator operator--(int)

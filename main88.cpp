@@ -19,7 +19,7 @@ int main()
 		std::cout << *it << std::endl;
 		it++;
 	}*/
-	ft::set<int> a;
+	/*ft::set<int> a;
 	a.insert(1);
 	a.insert(3);
 	a.insert(5);
@@ -61,7 +61,30 @@ int main()
 	{
 		std::cout << *ib2 << std::endl;
 		ib2++;
-	}
+	}*/
+	ft::set<int> myset;
+	ft::set<int>::iterator it;
+
+  // insert some values:
+  for (int i=1; i<10; i++) myset.insert(i*10);  // 10 20 30 40 50 60 70 80 90
+
+  it = myset.begin();
+  ++it;                                         // "it" points now to 20
+
+  myset.erase (it);
+
+  myset.erase (40);
+
+  it = myset.find (60);
+  myset.erase (it, myset.end());
+
+  std::cout << "myset contains:";
+  for (it=myset.begin(); it!=myset.end(); ++it)
+    std::cout << ' ' << *it;
+  std::cout << '\n';
+
+  return 0;
+
 //	ft::map<int, int> a;
 //	ft::pair<int , int> b(1, 9);
 //	ft::pair<int , int> c(8, 19);
