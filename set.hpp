@@ -30,7 +30,7 @@ class Allocator = std::allocator<Key>
 		typedef typename Allocator::pointer pointer;
 		typedef typename Allocator::const_pointer const_pointer;
 		typedef ft::const_bidirectional_iterator<node< value_type>, value_type> iterator;
-		typedef ft::const_bidirectional_iterator<node< const value_type>, value_type> const_iterator;
+		typedef ft::const_bidirectional_iterator<node< value_type>, const value_type> const_iterator;
 		//class iterator;
 		typedef ft::reverse_iterator<iterator> reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
@@ -83,16 +83,16 @@ class Allocator = std::allocator<Key>
 		//BEGIN//cosnt_fct TODO
 		iterator begin()
 		{
-			return (iterator(_rbt.min(), _rbt.get_end()));
+			return (iterator(_rbt.min(), _rbt.get_end(), _rbt.get_root()));
 		}
 		const_iterator begin() const 
 		{
-			return (const_iterator(_rbt.min(), _rbt.get_end()));
+			return (const_iterator(_rbt.min(), _rbt.get_end(), _rbt.get_root()));
 		}
 		//END//cosnt_fct TODO
 		iterator end()
 		{
-			return (iterator(_rbt.get_end(), _rbt.get_end()));
+			return (iterator(_rbt.get_end(), _rbt.get_end(), _rbt.get_root()));
 		}
 		//iterator root()
 		//{
@@ -100,7 +100,7 @@ class Allocator = std::allocator<Key>
 		//}
 		const_iterator end() const
 		{
-			return (const_iterator(_rbt.get_end(), _rbt.get_end()));
+			return (const_iterator(_rbt.get_end(), _rbt.get_end(), _rbt.get_root()));
 		}
 		//RBEGIN//cosnt_fct TODO
 		reverse_iterator rbegin()
@@ -146,13 +146,13 @@ class Allocator = std::allocator<Key>
 		ft::pair<iterator, bool> insert(const value_type& value)
 		{
 			bool tmp = _rbt.insert(value);
-			return (ft::make_pair<iterator, bool>(iterator(_rbt.search(value), _rbt.get_end()), tmp));
+			return (ft::make_pair<iterator, bool>(iterator(_rbt.search(value), _rbt.get_end(), _rbt.get_root()), tmp));
 		}
 		iterator insert(iterator hint, const value_type& value)
 		{
 			(void)hint;
 			_rbt.insert(value);
-			return(iterator(_rbt.search(value), _rbt.get_end()));
+			return(iterator(_rbt.search(value), _rbt.get_end(), _rbt.get_root()));
 		}
 		template<class InputIt>
 		void insert(InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = ft::nullptr_a)
@@ -206,28 +206,28 @@ class Allocator = std::allocator<Key>
 		//FIND
 		iterator find( const Key& key)
 		{
-			return(iterator(_rbt.search(key), _rbt.get_end()));
+			return(iterator(_rbt.search(key), _rbt.get_end(), _rbt.get_root()));
 		}
 		const_iterator find( const Key& key) const
 		{
-			return(const_iterator(_rbt.search(key), _rbt.get_end()));
+			return(const_iterator(_rbt.search(key), _rbt.get_end(), _rbt.get_root()));
 		}
 		//LOWER_BOUND
 		iterator lower_bound( const Key& key)
 		{
-			return (iterator(_rbt.lower_bound(key), _rbt.get_end()));
+			return (iterator(_rbt.lower_bound(key), _rbt.get_end(), _rbt.get_root()));
 		}
 		const_iterator lower_bound( const Key& key) const
 		{
-			return (const_iterator(_rbt.lower_bound(key), _rbt.get_end()));
+			return (const_iterator(_rbt.lower_bound(key), _rbt.get_end(), _rbt.get_root()));
 		}
 		iterator upper_bound( const Key& key)
 		{
-			return (iterator(_rbt.upper_bound(key), _rbt.get_end()));
+			return (iterator(_rbt.upper_bound(key), _rbt.get_end(), _rbt.get_root()));
 		}
 		const_iterator upper_bound( const Key& key) const
 		{
-			return (const_iterator(_rbt.upper_bound(key), _rbt.get_end()));
+			return (const_iterator(_rbt.upper_bound(key), _rbt.get_end(), _rbt.get_root()));
 		}
 		//EQUAL_RANGE
 		ft::pair<iterator, iterator> equal_range(const Key& key)

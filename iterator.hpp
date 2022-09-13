@@ -82,7 +82,7 @@ class reverse_iterator
 	{
 		return (_itr);
 	}
-	reference operator*() const
+	value_type& operator*() const
 	{
 		iterator_type tmp = _itr;
 		return (*--tmp);
