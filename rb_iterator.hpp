@@ -6,7 +6,7 @@
 
 namespace ft{
 	
-template < typename Node, class Compare>
+template < typename Node, class T>
 class const_bidirectional_iterator : public ft::iterator<bidirectional_iterator_tag, Node>
 {
 	public:
@@ -18,6 +18,7 @@ class const_bidirectional_iterator : public ft::iterator<bidirectional_iterator_
 	typedef typename ft::iterator<bidirectional_iterator_tag, Node>::reference reference;
 	//typedef typename ft::iteratot_bidirectional_iterator_tag, Node>::reference::value_type referenceval;
 	typedef typename ft::iterator<bidirectional_iterator_tag, Node>::const_pointer pointer;
+	typedef typename ft::iterator<bidirectional_iterator_tag, T>::value_type value;
 	//typedef typename ft::iterator<const_bidirectional_iterator_tag, Node>::pointer::value_type pointerval;
 	const_bidirectional_iterator() : _node(ft::nullptr_a), _end(ft::nullptr_a)
 	{}
@@ -33,9 +34,11 @@ class const_bidirectional_iterator : public ft::iterator<bidirectional_iterator_
 	}
 	~const_bidirectional_iterator()
 	{};
+	operator const_bidirectional_iterator<Node, const T>()
+	{return const_bidirectional_iterator<Node, const T>(_node, _end);}
 	pointer get_ptr() const
 	{return this->_node;}
-	typename Node::value_type operator*() const
+	value operator*() const
 	{
 		return (_node->data);
 	}
@@ -192,22 +195,22 @@ class const_bidirectional_iterator : public ft::iterator<bidirectional_iterator_
 };
 
 
-template< class Key, class Compare >
+template< class Key, class T >
 
-bool operator==( const ft::const_bidirectional_iterator<Key, Compare>& lhs,
-                 const ft::const_bidirectional_iterator<Key, Compare>& rhs )
+bool operator==( const ft::const_bidirectional_iterator<Key, T>& lhs,
+                 const ft::const_bidirectional_iterator<Key, T>& rhs )
 {
         return (lhs.get_ptr() == rhs.get_ptr());
 }
 
-template< class Key, class Compare >
+template< class Key, class T >
 
-bool operator!=( const ft::const_bidirectional_iterator<Key, Compare>& lhs,
-                const ft::const_bidirectional_iterator<Key, Compare>& rhs )
+bool operator!=( const ft::const_bidirectional_iterator<Key, T>& lhs,
+                const ft::const_bidirectional_iterator<Key, T>& rhs )
 {
         return (lhs.get_ptr() != rhs.get_ptr());
 }
-template < typename Node, class Compare>
+template < typename Node, class T>
 class bidirectional_iterator : public ft::iterator<bidirectional_iterator_tag, Node>
 {
 	public:

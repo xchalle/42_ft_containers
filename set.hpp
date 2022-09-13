@@ -29,8 +29,8 @@ class Allocator = std::allocator<Key>
 		typedef const value_type& const_reference;
 		typedef typename Allocator::pointer pointer;
 		typedef typename Allocator::const_pointer const_pointer;
-		typedef ft::const_bidirectional_iterator<node< value_type>, key_compare> iterator;
-		typedef ft::const_bidirectional_iterator<node< value_type>, key_compare> const_iterator;
+		typedef ft::const_bidirectional_iterator<node< value_type>, value_type> iterator;
+		typedef ft::const_bidirectional_iterator<node< const value_type>, value_type> const_iterator;
 		//class iterator;
 		typedef ft::reverse_iterator<iterator> reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;

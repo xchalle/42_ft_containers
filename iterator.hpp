@@ -47,6 +47,7 @@ template <class Category,
 {
 	typedef Category iterator_category;
 	typedef T value_type;
+	typedef const T const_value_type;
 	typedef Distance difference_type;
 	typedef Pointer pointer;
 	typedef const Pointer const_pointer;
