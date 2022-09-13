@@ -124,14 +124,14 @@ class const_bidirectional_iterator : public ft::iterator<bidirectional_iterator_
 			}
 			_node = tmp;
 		}*/
-		if (_node == min(_root))
+		if (_node == _end)
 		{
-			_node = _end;
+			_node = max(_root);
 			return (*this);
 		}
-		else if (_node == _end)
+		else if (_node == min(_root))
 		{
-			_node = NULL;
+			_node = _end;
 			return (*this);
 		}
 		this->_node = predecessor(_node);

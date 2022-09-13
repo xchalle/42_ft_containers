@@ -158,10 +158,7 @@ class Allocator = std::allocator<Key>
 		void insert(InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = ft::nullptr_a)
 		{
 			while(first != last)
-			{
-				_rbt.insert(*first);
-				first++;
-			}
+				_rbt.insert(*first++);
 		}
 		//ERASE
 		iterator erase(iterator pos)
@@ -172,7 +169,11 @@ class Allocator = std::allocator<Key>
 		iterator erase(iterator first, iterator last)
 		{
 			while (first != last)
-				_rbt.delete_node(*(first++));
+			{
+				iterator tmp = first;
+				first++;
+				_rbt.delete_node(*(tmp));
+			}
 			return end();
 		}
 		size_type erase (const Key& key)
