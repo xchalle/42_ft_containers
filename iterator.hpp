@@ -65,7 +65,7 @@ class reverse_iterator
 	typedef typename ft::iterator_traits<Iter>::pointer pointer;
 	typedef typename ft::iterator_traits<Iter>::reference reference;
 
-	reverse_iterator() : _itr(NULL)
+	reverse_iterator() : _itr()
 	{}
 	explicit reverse_iterator( iterator_type x) : _itr(x)
 	{}

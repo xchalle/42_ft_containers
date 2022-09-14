@@ -53,11 +53,12 @@ class Allocator = std::allocator<Key>
 		template < class InputIt>
 			set( InputIt first, InputIt last, const Compare &comp = Compare(), const Allocator& alloc = Allocator()) : _comp(comp), _alloc(alloc)
 			{
-				while (first != last)
-				{
-					_rbt.insert(*first);
-					first++;
-				}
+				insert(first, last);
+			//	while (first != last)
+			//	{
+			//		_rbt.insert(*first);
+			//		first++;
+			//	}
 			}
 		//DESTRUCTOR
 		~set()
@@ -71,10 +72,10 @@ class Allocator = std::allocator<Key>
 		//OPERTOR=
 		set& operator=(const set& other)
 		{
-			if (*this == other)
-				return (*this);
+		//	if (*this == other)
+		//		return (*this);
 			clear();
-			isert(begin(), other.begin(), other.end());
+			insert(other.begin(), other.end());
 			//TODO
 			return (*this);
 		}
@@ -168,12 +169,13 @@ class Allocator = std::allocator<Key>
 		}
 		iterator erase(iterator first, iterator last)
 		{
+			last--;
 			while (first != last)
 			{
-				iterator tmp = first;
-				first++;
-				_rbt.delete_node(*(tmp));
+				//iterator tmp = last--;
+				_rbt.delete_node(*(last--));
 			}
+			_rbt.delete_node(*(last));
 			return end();
 		}
 		size_type erase (const Key& key)
@@ -293,6 +295,11 @@ class Allocator = std::allocator<Key>
 		if (lhs < rhs)
 			return false;
 		return true;
+	}
+	template<class Key, class Compare, class Alloc>
+	void swap(ft::set<Key, Compare, Alloc>& lhs, ft::set<Key, Compare, Alloc>& rhs)
+	{
+		lhs.swap(rhs);
 	}
 }
 

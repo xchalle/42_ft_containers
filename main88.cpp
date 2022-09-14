@@ -62,7 +62,7 @@ int main()
 		std::cout << *ib2 << std::endl;
 		ib2++;
 	}*/
-	ft::set<int> myset;
+/*	ft::set<int> myset;
 	ft::set<int>::iterator it;
 
   // insert some values:
@@ -84,7 +84,11 @@ int main()
   std::cout << '\n';
 
   return 0;
-
+*/
+	ft::set<int> a;
+	a.erase(a.begin(), a.end());
+	ft::set<int>::iterator it = a.begin();
+	std::cout << *(it) << std::endl;
 //	ft::map<int, int> a;
 //	ft::pair<int , int> b(1, 9);
 //	ft::pair<int , int> c(8, 19);

@@ -89,7 +89,6 @@ template <typename T, class Compare,
 			if (s == NULL || s == _end)
 				return _end;
 			for ( ; s->right != _end; s = s->right);
-			std::cout << s->data << std::endl;
 			return s;
 		}
 
