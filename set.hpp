@@ -216,30 +216,30 @@ class Allocator = std::allocator<Key>
 			return(const_iterator(_rbt.search(key), _rbt.get_end(), _rbt.get_root()));
 		}
 		//LOWER_BOUND
-		iterator lower_bound( const Key& key)
-		{
-			return (iterator(_rbt.lower_bound(key), _rbt.get_end(), _rbt.get_root()));
-		}
 		const_iterator lower_bound( const Key& key) const
 		{
 			return (const_iterator(_rbt.lower_bound(key), _rbt.get_end(), _rbt.get_root()));
 		}
-		iterator upper_bound( const Key& key)
+		iterator lower_bound( const Key& key)
 		{
-			return (iterator(_rbt.upper_bound(key), _rbt.get_end(), _rbt.get_root()));
+			return (iterator(_rbt.lower_bound(key), _rbt.get_end(), _rbt.get_root()));
 		}
 		const_iterator upper_bound( const Key& key) const
 		{
 			return (const_iterator(_rbt.upper_bound(key), _rbt.get_end(), _rbt.get_root()));
 		}
+		iterator upper_bound( const Key& key)
+		{
+			return (iterator(_rbt.upper_bound(key), _rbt.get_end(), _rbt.get_root()));
+		}
 		//EQUAL_RANGE
 		ft::pair<iterator, iterator> equal_range(const Key& key)
 		{
-			return (ft::pair<iterator, iterator>(lower_bound(key), upper_bound(key)));
+			return (ft::make_pair(lower_bound(key), upper_bound(key)));
 		}
 		ft::pair<const_iterator, const_iterator> equal_range(const Key& key) const
 		{
-			return (ft::pair<const_iterator, const_iterator>(lower_bound(key), upper_bound(key)));
+			return (ft::make_pair(lower_bound(key), upper_bound(key)));
 		}
 		//KEY_COMP
 		key_compare key_comp() const

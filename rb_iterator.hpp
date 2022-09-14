@@ -24,8 +24,10 @@ class const_bidirectional_iterator : public ft::iterator<bidirectional_iterator_
 	{}
 	const_bidirectional_iterator(const nodeptr _ptr, const nodeptr end, const nodeptr root) : _node(_ptr), _end(end), _root(root)
 	{}
-	const_bidirectional_iterator(const const_bidirectional_iterator &rhs) : _node(rhs._node), _end(rhs._end), _root(rhs._root)
-	{}
+	const_bidirectional_iterator(const const_bidirectional_iterator &rhs)/* : _node(rhs._node), _end(rhs._end), _root(rhs._root)*/
+	{
+		*this = rhs;
+	}
 	const_bidirectional_iterator& operator=(const const_bidirectional_iterator &rhs)
 	{
 		_node = rhs._node;
