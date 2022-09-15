@@ -197,18 +197,18 @@ class const_bidirectional_iterator : public ft::iterator<bidirectional_iterator_
 };
 
 
-template< class Key, class T >
+template< class Node, class T1, class T2 >
 
-bool operator==( const ft::const_bidirectional_iterator<Key, T>& lhs,
-                 const ft::const_bidirectional_iterator<Key, T>& rhs )
+bool operator==( const ft::const_bidirectional_iterator<Node, T1>& lhs,
+                 const ft::const_bidirectional_iterator<Node, T2>& rhs )
 {
         return (lhs.get_ptr() == rhs.get_ptr());
 }
 
-template< class Key, class T >
+template< class Node, class T1, class T2 >
 
-bool operator!=( const ft::const_bidirectional_iterator<Key, T>& lhs,
-                const ft::const_bidirectional_iterator<Key, T>& rhs )
+bool operator!=( const ft::const_bidirectional_iterator<Node, T1>& lhs,
+		 const ft::const_bidirectional_iterator<Node, T2>& rhs )
 {
         return (lhs.get_ptr() != rhs.get_ptr());
 }
@@ -402,18 +402,18 @@ class bidirectional_iterator : public ft::iterator<bidirectional_iterator_tag, N
 };
 
 
-template< class Key, class T >
+template< class Node, class T1, class T2>
 
-bool operator==( const ft::bidirectional_iterator<Key, T>& lhs,
-                 const ft::bidirectional_iterator<Key, T>& rhs )
+bool operator==( const ft::bidirectional_iterator<Node, T1>& lhs,
+                 const ft::bidirectional_iterator<Node, T2>& rhs )
 {
         return (lhs.get_ptr() == rhs.get_ptr());
 }
 
-template< class Key, class T >
+template< class Node, class T1, class T2 >
 
-bool operator!=( const ft::bidirectional_iterator<Key, T>& lhs,
-                const ft::bidirectional_iterator<Key, T>& rhs )
+bool operator!=( const ft::bidirectional_iterator<Node, T1>& lhs,
+                const ft::bidirectional_iterator<Node, T2>& rhs )
 {
         return (lhs.get_ptr() != rhs.get_ptr());
 }

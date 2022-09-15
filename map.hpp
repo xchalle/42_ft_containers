@@ -41,15 +41,17 @@ class Allocator = std::allocator<ft::pair<const Key, T> >
 		//VALUE_COMPARE TODO
 		class value_compare : public std::binary_function<value_type, value_type, bool>
 		{
+			friend class map;
 			typedef bool result_type;
 			typedef value_type first_argument_type;
 			typedef value_type second_argument_type;
 
 			protected :
-			value_compare( Compare c) : _comp(c)
+			value_compare( key_compare c) : _comp(c)
 			{
 			}
-			Compare _comp;
+			key_compare _comp;
+			public:
 			result_type operator() ( const value_type& lhs, const value_type& rhs) const
 			{
 				return _comp(lhs.first, rhs.first);
@@ -57,18 +59,18 @@ class Allocator = std::allocator<ft::pair<const Key, T> >
 		};
 		key_compare				_comp;
 		allocator_type				_alloc;
-		rb_tree<value_type, key_compare>	_rbt;
+		rb_tree<value_type, value_compare>	_rbt;
 
 		//CONSTRUCTOR TODO
-		map() : _comp(key_compare()), _alloc(Allocator())
+		map() : _comp(key_compare()), _alloc(Allocator()), _rbt(value_compare(_comp))
 		{
 		}
 		explicit map( const Compare& comp,
-				const Allocator& alloc = Allocator() ) : _comp(comp), _alloc(alloc)
+				const Allocator& alloc = Allocator() ) : _comp(comp), _alloc(alloc), _rbt(value_compare(_comp))
 		{
 		}
 		template < class InputIt>
-			map( InputIt first, InputIt last, const Compare &comp = Compare(), const Allocator& alloc = Allocator()) : _comp(comp), _alloc(alloc)
+			map( InputIt first, InputIt last, const Compare &comp = Compare(), const Allocator& alloc = Allocator()) : _comp(comp), _alloc(alloc), _rbt(value_compare(_comp))
 			{
 				insert(first, last);
 			//	while (first != last)
@@ -77,6 +79,10 @@ class Allocator = std::allocator<ft::pair<const Key, T> >
 			//		first++;
 			//	}
 			}
+		map (const map &rhs) : _rbt(value_compare(key_compare()))
+	{
+		insert(rhs.begin(), rhs.end());
+	}
 		//DESTRUCTOR
 		~map()
 		{ 
@@ -100,15 +106,18 @@ class Allocator = std::allocator<ft::pair<const Key, T> >
 		allocator_type get_allocator() const {return (_alloc);}
 		mapped_type& at( const key_type& key)
 		{
-			return (_rbt.search(key)->second);
+			return (_rbt.search(ft::make_pair(key, mapped_type()))->data.second);
 		}
 		const mapped_type& at( const key_type& key) const
 		{
-			return (_rbt.search(key)->data.second);
+			return (_rbt.search(ft::make_pair(key, mapped_type()))->data.second);
 		}
 		mapped_type& operator[]( const key_type& key)
 		{
-			return (_rbt.search(key)->data.second);
+			insert(ft::make_pair(key, mapped_type()));
+			return (_rbt.search(ft::make_pair(key, mapped_type()))->data.second);
+			
+		//	return (_rbt.search(key)->data.second);
 		}
 		//BEGIN//cosnt_fct TODO
 		iterator begin()
@@ -209,7 +218,7 @@ class Allocator = std::allocator<ft::pair<const Key, T> >
 		}
 		size_type erase (const Key& key)
 		{
-			if (_rbt.delete_node(key))
+			if (_rbt.delete_node(ft::make_pair(key, mapped_type())))
 				return 1;
 			return 0;
 		}
@@ -238,28 +247,28 @@ class Allocator = std::allocator<ft::pair<const Key, T> >
 		//FIND
 		iterator find( const Key& key)
 		{
-			return(iterator(_rbt.search(key), _rbt.get_end(), _rbt.get_root()));
+			return(iterator(_rbt.search(ft::make_pair(key, mapped_type())), _rbt.get_end(), _rbt.get_root()));
 		}
 		const_iterator find( const Key& key) const
 		{
-			return(const_iterator(_rbt.search(key), _rbt.get_end(), _rbt.get_root()));
+			return(const_iterator(_rbt.search(ft::make_pair(key, mapped_type())), _rbt.get_end(), _rbt.get_root()));
 		}
 		//LOWER_BOUND
 		const_iterator lower_bound( const Key& key) const
 		{
-			return (const_iterator(_rbt.lower_bound(key), _rbt.get_end(), _rbt.get_root()));
+			return (const_iterator(_rbt.lower_bound(ft::make_pair(key, mapped_type())), _rbt.get_end(), _rbt.get_root()));
 		}
 		iterator lower_bound( const Key& key)
 		{
-			return (iterator(_rbt.lower_bound(key), _rbt.get_end(), _rbt.get_root()));
+			return (iterator(_rbt.lower_bound(ft::make_pair(key, mapped_type())), _rbt.get_end(), _rbt.get_root()));
 		}
 		const_iterator upper_bound( const Key& key) const
 		{
-			return (const_iterator(_rbt.upper_bound(key), _rbt.get_end(), _rbt.get_root()));
+			return (const_iterator(_rbt.upper_bound(ft::make_pair(key, mapped_type())), _rbt.get_end(), _rbt.get_root()));
 		}
 		iterator upper_bound( const Key& key)
 		{
-			return (iterator(_rbt.upper_bound(key), _rbt.get_end(), _rbt.get_root()));
+			return (iterator(_rbt.upper_bound(ft::make_pair(key, mapped_type())), _rbt.get_end(), _rbt.get_root()));
 		}
 		//EQUAL_RANGE
 		ft::pair<iterator, iterator> equal_range(const Key& key)

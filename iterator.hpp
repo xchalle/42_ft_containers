@@ -87,7 +87,7 @@ class reverse_iterator
 		iterator_type tmp = _itr;
 		return (*--tmp);
 	}
-	pointer operator->() const
+	value_type* operator->() const
 	{
 		return (&(operator*()));
 	}

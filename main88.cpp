@@ -3,19 +3,14 @@
 #include <set>
 #include <iostream>
 //#include "map.hpp"
-#include "set.hpp"
+#include "map.hpp"
 
 int main()
 {
-	ft::node<int> toadd(2);
-	ft::set<ft::node<int>> b;
-	b.insert(toadd);
-	ft::set<ft::node<int>>::iterator ib = b.begin();
-	std::cout << ib->parent << std::endl;
-	std::map<int, int> a;
-	a.insert(std::make_pair(1, 9));
-	a.insert(std::make_pair(2, 2));
-	std::map<int, int>::iterator it = a.begin();
+	ft::map<int, int> a;
+	a.insert(ft::make_pair(1, 9));
+	a.insert(ft::make_pair(2, 2));
+	ft::map<int, int>::iterator it = a.begin();
 	//std::pair<int, int> pai = *it;
 	std::cout << it->first << std::endl;
 /*	std::set<int> a;

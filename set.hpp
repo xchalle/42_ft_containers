@@ -60,6 +60,10 @@ class Allocator = std::allocator<Key>
 			//		first++;
 			//	}
 			}
+		set (const set& rhs)
+		{
+			insert(rhs.begin(), rhs.end())
+		}
 		//DESTRUCTOR
 		~set()
 		{ 
