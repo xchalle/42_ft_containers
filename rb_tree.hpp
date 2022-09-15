@@ -45,6 +45,11 @@ struct node {
 		return (data == rhs.data);
 	}
 };
+template <typename T>
+	bool operator<(const node<T>& lhs, const node<T>&rhs)
+	{
+		return (lhs.data <rhs.data);
+	}
 
 template <typename T, class Compare,
 			class Node = ft::node<T>, class Allocator = std::allocator<Node> >

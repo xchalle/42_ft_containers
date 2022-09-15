@@ -7,6 +7,17 @@
 
 int main()
 {
+	ft::node<int> toadd(2);
+	ft::set<ft::node<int>> b;
+	b.insert(toadd);
+	ft::set<ft::node<int>>::iterator ib = b.begin();
+	std::cout << ib->parent << std::endl;
+	std::map<int, int> a;
+	a.insert(std::make_pair(1, 9));
+	a.insert(std::make_pair(2, 2));
+	std::map<int, int>::iterator it = a.begin();
+	//std::pair<int, int> pai = *it;
+	std::cout << it->first << std::endl;
 /*	std::set<int> a;
 	a.insert(1);
 	a.insert(2);
@@ -85,10 +96,10 @@ int main()
 
   return 0;
 */
-	ft::set<int> a;
+	/*ft::set<int> a;
 	a.erase(a.begin(), a.end());
 	ft::set<int>::iterator it = a.begin();
-	std::cout << *(it) << std::endl;
+	std::cout << *(it) << std::endl;*/
 //	ft::map<int, int> a;
 //	ft::pair<int , int> b(1, 9);
 //	ft::pair<int , int> c(8, 19);

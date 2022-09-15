@@ -45,7 +45,7 @@ class const_bidirectional_iterator : public ft::iterator<bidirectional_iterator_
 	{
 		return (_node->data);
 	}
-	pointer operator->() const
+	value_type* operator->() const
 	{
 		return (&(_node->data));
 	}
@@ -219,33 +219,38 @@ class bidirectional_iterator : public ft::iterator<bidirectional_iterator_tag, N
 	typedef Node *nodeptr;
 	typedef Node node;
 	typedef typename ft::iterator<bidirectional_iterator_tag, Node>::iterator_category iterator_category;
-	typedef typename ft::iterator<bidirectional_iterator_tag, Node>::value_type value_type;
+	typedef typename ft::iterator<bidirectional_iterator_tag, T>::value_type value_type;
 	typedef typename ft::iterator<bidirectional_iterator_tag, Node>::difference_type difference_type;
 	typedef typename ft::iterator<bidirectional_iterator_tag, Node>::reference reference;
 	//typedef typename ft::iterator<bidirectional_iterator_tag, Node>::reference::value_type referenceval;
 	typedef typename ft::iterator<bidirectional_iterator_tag, Node>::pointer pointer;
 	//typedef typename ft::iterator<bidirectional_iterator_tag, Node>::pointer::value_type pointerval;
-	bidirectional_iterator() : _node(ft::nullptr_a)
+	bidirectional_iterator() : _node(ft::nullptr_a), _end(ft::nullptr_a), _root(ft::nullptr_a)
 	{}
-	bidirectional_iterator(const pointer _ptr, const pointer end) : _node(_ptr), _end(end)
+	bidirectional_iterator(const nodeptr _ptr, const nodeptr end, const nodeptr root) : _node(_ptr), _end(end), _root(root)
 	{}
-	bidirectional_iterator(const bidirectional_iterator &rhs) : _node(rhs._node)
-	{}
+	bidirectional_iterator(const bidirectional_iterator &rhs)/* : _node(rhs._node), _end(rhs._end), _root(rhs._root)*/
+	{
+		*this = rhs;
+	}
 	bidirectional_iterator& operator=(const bidirectional_iterator &rhs)
 	{
 		_node = rhs._node;
 		_end = rhs._end;
+		_root = rhs._root;
 		return (*this);
 	}
 	~bidirectional_iterator()
 	{};
+	operator bidirectional_iterator<Node, const T>()
+	{return bidirectional_iterator<Node, const T>(_node,_end, _root);}
 	pointer get_ptr() const
 	{return this->_node;}
-	typename Node::value_type operator*() const
+	value_type& operator*() const
 	{
 		return (_node->data);
 	}
-	pointer operator->() const
+	value_type* operator->() const
 	{
 		return (&(_node->data));
 	}
@@ -284,10 +289,7 @@ class bidirectional_iterator : public ft::iterator<bidirectional_iterator_tag, N
 			}
 			_node = tmp;
 		}*/
-		pointer root = _node;
-		while (root->parent != NULL)
-			root = root->parent;
-		if (_node == max(root))
+		if (_node == max(_root))
 		{
 			_node = _end;
 			return (*this);
@@ -308,7 +310,7 @@ class bidirectional_iterator : public ft::iterator<bidirectional_iterator_tag, N
 	}
 	bidirectional_iterator& operator--()
 	{
-		if (_node->left->left)
+		/*if (_node->left->left)
 		{
 			_node = _node->left;
 			if (_node->right->left != _node)
@@ -328,8 +330,18 @@ class bidirectional_iterator : public ft::iterator<bidirectional_iterator_tag, N
 				tmp = tmp->parent;
 			}
 			_node = tmp;
+		}*/
+		if (_node == _end)
+		{
+			_node = max(_root);
+			return (*this);
 		}
-		//this->_node = _node->predecessor(_node);
+		else if (_node == min(_root))
+		{
+			_node = _end;
+			return (*this);
+		}
+		this->_node = predecessor(_node);
 		return (*this);
 	}
 	bidirectional_iterator operator--(int)
@@ -341,6 +353,8 @@ class bidirectional_iterator : public ft::iterator<bidirectional_iterator_tag, N
 	private:
 	pointer min(pointer n)
 	{
+		if (n == NULL || n == _end)
+			return _end;
 		for(; n->left != _end; n = n->left)
 		{
 		}
@@ -348,6 +362,8 @@ class bidirectional_iterator : public ft::iterator<bidirectional_iterator_tag, N
 	}
 	pointer max(pointer n)
 	{
+		if (n == NULL || n == _end)
+			return _end;
 		for(; n->right != _end; n = n->right)
 		{
 		}
@@ -358,7 +374,7 @@ class bidirectional_iterator : public ft::iterator<bidirectional_iterator_tag, N
 		if (n->right != _end)
 			return min(n->right);
 
-		pointer tmp = n->parent;
+		nodeptr tmp = n->parent;
 		while (tmp != _end && n == tmp->right)
 		{
 			n = tmp;
@@ -371,7 +387,7 @@ class bidirectional_iterator : public ft::iterator<bidirectional_iterator_tag, N
 		if (n->left != _end)
 			return max(n->left);
 
-		pointer tmp = n->parent;
+		nodeptr tmp = n->parent;
 		while (tmp != _end && n == tmp->left)
 		{
 			n = tmp;
@@ -380,23 +396,24 @@ class bidirectional_iterator : public ft::iterator<bidirectional_iterator_tag, N
 		return tmp;
 	}
 	public:
-	pointer _node;
-	pointer _end;
+	nodeptr _node;
+	nodeptr _end;
+	nodeptr _root;
 };
 
 
-template< class Key, class Compare >
+template< class Key, class T >
 
-bool operator==( const ft::bidirectional_iterator<Key, Compare>& lhs,
-                 const ft::bidirectional_iterator<Key, Compare>& rhs )
+bool operator==( const ft::bidirectional_iterator<Key, T>& lhs,
+                 const ft::bidirectional_iterator<Key, T>& rhs )
 {
         return (lhs.get_ptr() == rhs.get_ptr());
 }
 
-template< class Key, class Compare >
+template< class Key, class T >
 
-bool operator!=( const ft::bidirectional_iterator<Key, Compare>& lhs,
-                const ft::bidirectional_iterator<Key, Compare>& rhs )
+bool operator!=( const ft::bidirectional_iterator<Key, T>& lhs,
+                const ft::bidirectional_iterator<Key, T>& rhs )
 {
         return (lhs.get_ptr() != rhs.get_ptr());
 }
