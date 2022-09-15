@@ -62,7 +62,7 @@ class Allocator = std::allocator<Key>
 			}
 		set (const set& rhs)
 		{
-			insert(rhs.begin(), rhs.end())
+			insert(rhs.begin(), rhs.end());
 		}
 		//DESTRUCTOR
 		~set()

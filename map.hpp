@@ -309,7 +309,7 @@ class Allocator = std::allocator<ft::pair<const Key, T> >
 	template< class Key , class Compare, class Alloc >
 	bool operator<( const ft::map<Key, Compare, Alloc>& lhs, const ft::map<Key, Compare, Alloc>& rhs)
 	{
-		if(lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()))
+		if(ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()))
 			return true;
 		return false;
 	}
