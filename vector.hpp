@@ -91,9 +91,10 @@ class vector
 	//	ASSIGN TODO
 		void assign( size_type count, const T& value)
 		{
-			_alloc.deallocate(_begin, _capacity);
+			clear();
 			if (count > capacity())
 			{
+				_alloc.deallocate(_begin, _capacity);
 				_begin = _alloc.allocate(count);
 				_capacity = count;
 			}
@@ -109,6 +110,7 @@ class vector
 		void assign(InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = ft::nullptr_a) //change for distance
 	{
 		size_type count = ft::distance(first, last);
+		clear();
 		if (count > capacity())
 		{
 			_alloc.deallocate(_begin, _capacity);
@@ -519,8 +521,15 @@ void insert( iterator pos, InputIt first, InputIt last, typename ft::enable_if<!
 	{
 		if (size() > count)
 		{
-			_end = _begin + count;
+			_end--;
+			while (_end != _begin + count)
+			{
+				_alloc.destroy(_end);
+				_end--;
+			}
 			_alloc.destroy(_end);
+			//_end = _begin + count;
+
 		}
 		else if (size() < count)
 		{

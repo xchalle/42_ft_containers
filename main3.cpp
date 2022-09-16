@@ -9,7 +9,9 @@
 
 int main()
 {
-	ft::stack<float> other_stack;
+	ft::vector<int> a(3, 3);
+	ft::vector<ft::vector<int>> b(5, a);
+/*	ft::stack<float> other_stack;
 	ft::vector<std::string> lst;
 
 	lst.push_back("salut");
@@ -39,7 +41,7 @@ int main()
 		std::cout << my_stack.top() << '\n';
 		my_stack.pop();
 	}
-
+*/
 	return (0);
 
 }
