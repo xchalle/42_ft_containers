@@ -91,9 +91,9 @@ class vector
 	//	ASSIGN TODO
 		void assign( size_type count, const T& value)
 		{
+			_alloc.deallocate(_begin, _capacity);
 			if (count > capacity())
 			{
-				_alloc.deallocate(_begin, _capacity);
 				_begin = _alloc.allocate(count);
 				_capacity = count;
 			}
@@ -213,6 +213,7 @@ class vector
 //	RESERVE //throz error/change capacity/check if max_size() is exceed
 	void reserve( size_type new_cap)
 	{
+		//std::cout << "resize" << std::endl;
 		if (new_cap > max_size())
 			throw(std::length_error("vector::reserve"));
 		if (new_cap <= capacity())
@@ -231,6 +232,7 @@ class vector
 			_end++;
 			old_begin++;
 		}
+	//	_alloc.destroy(old_begin);
 		_alloc.deallocate(save_begin, old_capacity);
 	}
 //	CQPQCITY 
@@ -242,11 +244,18 @@ class vector
 	void clear()
 	{
 		//_end--;
-		while (_end != _begin)
+	/*	while (_end != _begin)
 		{
-			//_alloc.destroy(_end);
+			_alloc.destroy(_end);
 			_end--;
 		}
+		_alloc.destroy(_end);*/
+		size_type _size = this->size();
+		for (size_type i = 0; i < _size; ++i)
+		{
+			_alloc.destroy(_begin + i);
+		}
+		_end = _begin;
 	};
 //	INSERT 
 	iterator insert( iterator pos, const T& value )
@@ -266,8 +275,8 @@ class vector
 		for (int i = 1; i <= pos_int; i++)
 		{
 	//		if (i!= 0)
-				//_alloc.destroy(_end - i);
 			_alloc.construct(_end - i + count, *(_end - i));
+			_alloc.destroy(_end - i);
 		}
 		for (int i = 0; i < count; i++)
 			_alloc.construct(_end - pos_int + i, value);
@@ -325,8 +334,8 @@ class vector
 		for (int i = 1; i <= pos_int; i++)
 		{
 	//		if (i!= 0)
-				//_alloc.destroy(_end - i);
 			_alloc.construct(_end - i + count, *(_end - i));
+			_alloc.destroy(_end - i);
 		}
 		for (size_type i = 0; i < count; i++)
 			_alloc.construct(_end - pos_int + i, value);
@@ -389,8 +398,8 @@ void insert( iterator pos, InputIt first, InputIt last, typename ft::enable_if<!
 		for (int i = 1; i <= pos_int; i++)
 		{
 	//		if (i!= 0)
-				//_alloc.destroy(_end - i);
 			_alloc.construct(_end - i + count, *(_end - i));
+			_alloc.destroy(_end - i);
 		}
 		for (int i = 0; i < count; i++)
 		{
