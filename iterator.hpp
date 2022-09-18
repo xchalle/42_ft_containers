@@ -205,10 +205,10 @@ bool operator>=( const ft::reverse_iterator<Iterator1>& lhs,
 }
 
 template<typename T>
-class random_access_iterator : public ft::iterator<random_access_iterator_tag, T>
+class random_access_iterator : public ft::iterator<std::random_access_iterator_tag, T>
 {
 	public:
-		typedef typename ft::iterator<random_access_iterator_tag, T>::iterator_category iterator_category;
+		typedef typename ft::iterator<std::random_access_iterator_tag, T>::iterator_category iterator_category;
 		typedef typename ft::iterator<random_access_iterator_tag, T>::value_type value_type;
 		typedef typename ft::iterator<random_access_iterator_tag, T>::difference_type difference_type;
 		typedef typename ft::iterator<random_access_iterator_tag, T>::reference reference;
@@ -218,8 +218,8 @@ class random_access_iterator : public ft::iterator<random_access_iterator_tag, T
 	{}
 		random_access_iterator(pointer ptr) : _ptr(ptr)
 	{}
-		//template <typename T>
-		random_access_iterator(random_access_iterator& rhs)
+		template <typename U>
+		random_access_iterator(random_access_iterator<U>& rhs)
 	{
 		_ptr = rhs._ptr;
 	}

@@ -132,9 +132,9 @@ class vector
 	const_iterator end() const { return (_end);}
 //	REVERSE_ITERATOR
 	reverse_iterator rbegin() { return (reverse_iterator(end()));}
-	const_reverse_iterator rbegin() const { return reverse_iterator(end());}
+	const_reverse_iterator rbegin() const { return const_reverse_iterator(end());}
 	reverse_iterator rend() { return reverse_iterator(begin());}
-	const_reverse_iterator rend() const { return reverse_iterator(begin());}
+	const_reverse_iterator rend() const { return const_reverse_iterator(begin());}
 //	GET_ALLOCATOR
 	allocator_type get_allocator() const
 	{
@@ -405,7 +405,7 @@ void insert( iterator pos, InputIt first, InputIt last, typename ft::enable_if<!
 		}
 		for (int i = 0; i < count; i++)
 		{
-			_alloc.construct(_end - pos_int + i, *first);
+			_alloc.construct(_end - pos_int + i, (*first));
 			first++;
 		}
 		_end += count;
