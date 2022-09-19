@@ -207,13 +207,15 @@ class Allocator = std::allocator<ft::pair<const Key, T> >
 		}
 		iterator erase(iterator first, iterator last)
 		{
-			last--;
+			//last--;
 			while (first != last)
 			{
+				first = find(first->first);
 				//iterator tmp = last--;
-				_rbt.delete_node(*(last--));
+				erase(first++);
+				//_rbt.delete_node(*(first++));
 			}
-			_rbt.delete_node(*(last));
+			//_rbt.delete_node(*(last));
 			return end();
 		}
 		size_type erase (const Key& key)
