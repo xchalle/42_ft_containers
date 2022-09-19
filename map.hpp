@@ -294,7 +294,7 @@ class Allocator = std::allocator<ft::pair<const Key, T> >
 	template< class Key , class Compare, class Alloc >
 	bool operator==( const ft::map<Key, Compare, Alloc>& lhs, const ft::map<Key, Compare, Alloc>& rhs)
 	{
-		if (ft::equal(lhs.begin(), lhs.end(), rhs.begin()))
+		if (ft::equal(lhs.begin(), lhs.end(), rhs.begin()) && ft::equal(rhs.begin(), rhs.end(), lhs.begin()))
 			return true;
 		return false;
 

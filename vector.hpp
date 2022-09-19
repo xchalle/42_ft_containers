@@ -1,5 +1,5 @@
-#ifndef VECTOR_H
-#define VECTOR_H
+#ifndef VECTOR_HPP
+#define VECTOR_HPP
 #include <cstdio>
 #include <memory>
 #include <cstddef>
@@ -86,6 +86,7 @@ class vector
 			_alloc = other.get_allocator();
 			_capacity = 0;
 			insert(begin(), other.begin(), other.end());
+			//std::cout << "capacity=" << _capacity<< std::endl;
 		}
 
 	//	ASSIGN TODO
@@ -122,7 +123,7 @@ class vector
 		{
 			_alloc.construct(_end, *first);
 			_end++;
-			first++;
+			++first;
 		}
 	}
 //	ITERATOR
@@ -387,13 +388,15 @@ void insert( iterator pos, InputIt first, InputIt last, typename ft::enable_if<!
 		if (count == 0)
 			return ;
 		size_type new_size = size() + count;
+		//std::cout << "new_size =" << new_size << std::endl;
 		difference_type pos_int = _end - &(*pos);
+		//std::cout << "pos_int =" << pos_int << std::endl;
 		if (new_size > capacity())
 		{
 			if (new_size > max_size())
 				throw(std::length_error("vector::insert"));
 			if (capacity() * 2 > new_size)
-				reserve(size() * 2);
+				reserve(capacity() * 2);
 			else 
 				reserve(new_size);
 		}
@@ -406,7 +409,7 @@ void insert( iterator pos, InputIt first, InputIt last, typename ft::enable_if<!
 		for (int i = 0; i < count; i++)
 		{
 			_alloc.construct(_end - pos_int + i, (*first));
-			first++;
+			++first;
 		}
 		_end += count;
 		return;
@@ -482,7 +485,7 @@ void insert( iterator pos, InputIt first, InputIt last, typename ft::enable_if<!
 			return (last);
 		}
 		size_type count = ft::distance(first, last);
-		for (; first < last; first++)
+		for (; first < last; ++first)
 				_alloc.destroy(&(*first));
 		first = tmp;
 		for (int i = 0; i< _end - &(*last); i++)
@@ -548,7 +551,7 @@ void insert( iterator pos, InputIt first, InputIt last, typename ft::enable_if<!
 			while (size() != count)
 			{
 				_alloc.construct(_end, value);
-				_end++;
+				++_end;
 			}
 		}
 	}
@@ -578,6 +581,7 @@ void insert( iterator pos, InputIt first, InputIt last, typename ft::enable_if<!
 		if (*this == other)
 			return *this;
 		this->clear();
+//		std::cout << "capacity=" << _capacity << std::endl;
 		//_alloc.deallocate(_begin, capacity());
 		this->insert(this->end(), other.begin(), other.end());
 		return (*this);
@@ -669,6 +673,6 @@ void swap( ft::vector<T,Alloc>& lhs,
 	lhs.swap(rhs);
 }
 }
-//#include "vector.tpp"
+
 #endif
 

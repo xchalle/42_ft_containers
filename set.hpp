@@ -140,7 +140,7 @@ class Allocator = std::allocator<Key>
 		//MAX_SIZE
 		size_type max_size() const
 		{
-			return (_rbt.max_size());
+			return (_alloc.max_size());
 		}
 		//CLEAR
 		void clear()
@@ -177,7 +177,7 @@ class Allocator = std::allocator<Key>
 			while (first != last)
 			{
 				//iterator tmp = last--;
-				_rbt.delete_node(*(last--));
+				_rbt.delete_node(*(first--));
 			}
 			_rbt.delete_node(*(last));
 			return end();

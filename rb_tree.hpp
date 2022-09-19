@@ -1,5 +1,5 @@
-#ifndef AVL_TREE_HPP
-#define AVL_TREE_HPP
+#ifndef RB_TREE_HPP
+#define RB_TREE_HPP
 
 #define BLACK 0
 #define RED 1
