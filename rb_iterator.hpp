@@ -29,7 +29,8 @@ const_bidirectional_iterator(const const_bidirectional_iterator<Node, U> &rhs) :
 {
 //	*this = rhs;
 }
-const_bidirectional_iterator& operator=(const const_bidirectional_iterator &rhs)
+template <class U>
+const_bidirectional_iterator& operator=(const const_bidirectional_iterator<Node, U> &rhs)
 {
 	_node = rhs._node;
 	_end = rhs._end;

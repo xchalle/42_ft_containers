@@ -29,7 +29,7 @@ class Allocator = std::allocator<Key>
 		typedef const value_type& const_reference;
 		typedef typename Allocator::pointer pointer;
 		typedef typename Allocator::const_pointer const_pointer;
-		typedef ft::const_bidirectional_iterator<node< value_type>, value_type> iterator;
+		typedef ft::const_bidirectional_iterator<node< value_type>, const value_type> iterator;
 		typedef ft::const_bidirectional_iterator<node< value_type>, const value_type> const_iterator;
 		//class iterator;
 		typedef ft::reverse_iterator<iterator> reverse_iterator;
@@ -173,13 +173,18 @@ class Allocator = std::allocator<Key>
 		}
 		iterator erase(iterator first, iterator last)
 		{
-			last--;
+		//	last--;
+			//std::cout <<"last "<< *(--last) << std::endl;
 			while (first != last)
 			{
+				first = find(*first);
+				erase(first++);
 				//iterator tmp = last--;
-				_rbt.delete_node(*(first--));
+		//		_rbt.delete_node(*(last--));
+			//	std::cout << *first << std::endl;
+			//	_rbt.delete_node(*(first++));
 			}
-			_rbt.delete_node(*(last));
+			//_rbt.delete_node(*(last));
 			return end();
 		}
 		size_type erase (const Key& key)
@@ -260,7 +265,7 @@ class Allocator = std::allocator<Key>
 	template< class Key , class Compare, class Alloc >
 	bool operator==( const ft::set<Key, Compare, Alloc>& lhs, const ft::set<Key, Compare, Alloc>& rhs)
 	{
-		if (ft::equal(lhs.begin(), lhs.end(), rhs.begin()))
+		if (ft::equal(lhs.begin(), lhs.end(), rhs.begin()) && ft::equal(rhs.begin(), rhs.end(), lhs.begin()))
 			return true;
 		return false;
 

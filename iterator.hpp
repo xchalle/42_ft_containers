@@ -101,7 +101,7 @@ class reverse_iterator
 	reference operator[](difference_type n)
 	{
 		//return ((*(_itr + n - 1));
-		return (_itr.operator[](n));
+		return *(*this + n);
 	}
 	reverse_iterator& operator++()
 	{
