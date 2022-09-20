@@ -140,13 +140,13 @@ class vector
 		reference at( size_type pos )
 		{
 			if (pos > this->size())
-				throw std::out_of_range("exception at operation is out of range");
+				throw std::out_of_range("vector::at");
 			return ((*this)[pos]);	
 		};
 		const_reference at( size_type pos ) const
 		{
 			if (pos > this->size())
-				throw std::out_of_range("exception at operation is out of range");
+				throw std::out_of_range("vector::at");
 			return ((*this)[pos]);
 		};
 //	OPERATOR[] 
