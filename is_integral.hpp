@@ -3,7 +3,7 @@
 namespace ft
 {
 	template< class T, T val>
-	struct integral_constant
+		struct integral_constant
 	{
 		typedef T value_type;
 		typedef integral_constant<T, val> type;
@@ -52,7 +52,6 @@ namespace ft
 	template <>
 		struct is_integral<long> : public ft::true_type{};
 	template <>
-		struct is_integral<long long> : public ft::true_type
-	{};
+		struct is_integral<long long> : public ft::true_type{};
 }
 #endif

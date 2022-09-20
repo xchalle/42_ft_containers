@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "utils.hpp"
+#include "compare.hpp"
 #include "pair.hpp"
 #include "rb_tree.hpp"
 #include "enable_if.hpp"
@@ -13,7 +14,7 @@ namespace ft{
 template<
 class Key,
 class T,
-class Compare = std::less<Key>,
+class Compare = ft::less<Key>,
 class Allocator = std::allocator<ft::pair<const Key, T> >
 > class map
 {
@@ -39,7 +40,7 @@ class Allocator = std::allocator<ft::pair<const Key, T> >
 
 	public:
 		//VALUE_COMPARE TODO
-		class value_compare : public std::binary_function<value_type, value_type, bool>
+		class value_compare : public ft::binary_function<value_type, value_type, bool>
 		{
 			friend class map;
 			typedef bool result_type;
