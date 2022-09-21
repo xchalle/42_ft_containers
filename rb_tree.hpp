@@ -61,6 +61,7 @@ namespace ft{
 	{
 
 		public:
+
 			typedef T                                           value_type;
 			typedef Compare                                     value_compare;
 			typedef Allocator                                   allocator_type;
@@ -246,6 +247,7 @@ namespace ft{
 	
 	
 		private:
+
 			pointer		__search_wrapper(pointer node, const value_type key) const
 			{
 				//std::cout << "miaou" << std::endl;
@@ -508,8 +510,8 @@ namespace ft{
 				_node_alloc.deallocate(root, 1);
 			}
 	
-	
 		private:
+
 			allocator_type _node_alloc;
 			value_compare	_cmp;
 			pointer			_root;

@@ -11,6 +11,7 @@
 #include "rb_iterator.hpp"
 
 namespace ft{
+
 	template<class Key, class T, class Compare = ft::less<Key>, 
 		class Allocator = std::allocator<ft::pair<const Key, T> >
 			> class map
@@ -36,8 +37,8 @@ namespace ft{
 			typedef node<value_type> *nodeptr;
 
 		public:
-		//VALUE_COMPARE TODO
-			class value_compare : public ft::binary_function<value_type, value_type, bool>
+		
+			class value_compare : public ft::binary_function<value_type, value_type, bool> //VALUE_COMPARE
 			{
 				friend class map;
 				typedef bool result_type;
@@ -55,6 +56,7 @@ namespace ft{
 					return _comp(lhs.first, rhs.first);
 				}
 			};
+
 		protected:
 
 			key_compare				_comp;
@@ -62,8 +64,9 @@ namespace ft{
 			rb_tree<value_type, value_compare>	_rbt;
 
 		public:
-			//CONSTRUCTOR TODO
-			map() : _comp(key_compare()), _alloc(Allocator()), _rbt(value_compare(_comp))
+
+			
+			map() : _comp(key_compare()), _alloc(Allocator()), _rbt(value_compare(_comp))//CONSTRUCTOR
 			{}
 			explicit map( const Compare& comp,
 					const Allocator& alloc = Allocator() ) : _comp(comp), _alloc(alloc), _rbt(value_compare(_comp))
@@ -72,37 +75,29 @@ namespace ft{
 				map( InputIt first, InputIt last, const Compare &comp = Compare(), const Allocator& alloc = Allocator()) : _comp(comp), _alloc(alloc), _rbt(value_compare(_comp))
 			{
 				insert(first, last);
-				//	while (first != last)
-				//	{
-				//		_rbt.insert(*first);
-				//		first++;
-				//	}
 			}
 			map (const map &rhs) : _rbt(value_compare(key_compare()))
 			{
 				insert(rhs.begin(), rhs.end());
 			}
-			//DESTRUCTOR
-			~map()
+			
+			~map()//DESTRUCTOR
 			{ 
 				_rbt.destroy();
 				_rbt.destroy_end();
 			}
 
 
-			//OPERTOR=
-			map& operator=(const map& other)
+			
+			map& operator=(const map& other)//OPERTOR=
 			{
-			//	if (*this == other)
-			//		return (*this);
 				clear();
 				insert(other.begin(), other.end());
-				//TODO
 				return (*this);
 			}
-			//GET_ALLOCATOR
-			allocator_type get_allocator() const {return (_alloc);}
-			mapped_type& at( const key_type& key)
+			
+			allocator_type get_allocator() const {return (_alloc);}//GET_ALLOCATOR
+			mapped_type& at( const key_type& key)//AT
 			{
 				return (_rbt.search(ft::make_pair(key, mapped_type()))->data.second);
 			}
@@ -110,14 +105,13 @@ namespace ft{
 			{
 				return (_rbt.search(ft::make_pair(key, mapped_type()))->data.second);
 			}
-			mapped_type& operator[]( const key_type& key)
+			mapped_type& operator[]( const key_type& key)//OPERATOR[]
 			{
 				insert(ft::make_pair(key, mapped_type()));
 				return (_rbt.search(ft::make_pair(key, mapped_type()))->data.second);
-			//	return (_rbt.search(key)->data.second);
 			}
-			//BEGIN//cosnt_fct TODO
-			iterator begin()
+			
+			iterator begin()//BEGIN
 			{
 				return (iterator(_rbt.min(), _rbt.get_end(), _rbt.get_root()));
 			}
@@ -125,21 +119,18 @@ namespace ft{
 			{
 				return (const_iterator(_rbt.min(), _rbt.get_end(), _rbt.get_root()));
 			}
-			//END//cosnt_fct TODO
-			iterator end()
+			
+			iterator end()//END
 			{
 				return (iterator(_rbt.get_end(), _rbt.get_end(), _rbt.get_root()));
 			}
-			//iterator root()
-			//{
-			//	return (_root);
-			//}
+
 			const_iterator end() const
 			{
 				return (const_iterator(_rbt.get_end(), _rbt.get_end(), _rbt.get_root()));
 			}
-			//RBEGIN//cosnt_fct TODO
-			reverse_iterator rbegin()
+			
+			reverse_iterator rbegin()//RBEGIN
 			{
 				return (reverse_iterator(end()));
 			}
@@ -147,8 +138,8 @@ namespace ft{
 			{
 				return (const_reverse_iterator(end()));
 			}
-			//REND //cosnt_fct TODO
-			reverse_iterator rend()
+			
+			reverse_iterator rend()//REND 
 			{
 				return (reverse_iterator(begin()));
 			}
@@ -156,30 +147,30 @@ namespace ft{
 			{
 				return (const_reverse_iterator(begin()));
 			}
-			//EMPTY
-			bool empty() const
+			
+			bool empty() const//EMPTY
 			{
 				if (begin() == end())
 					return true;
 				return false;
 			}
-			//SIZE
-			size_type size() const
+			
+			size_type size() const//SIZE
 			{
 				return (ft::distance(begin(), end()));
 			}
-			//MAX_SIZE
-			size_type max_size() const
+			
+			size_type max_size() const//MAX_SIZE
 			{
 				return (_rbt.max_size());
 			}
-			//CLEAR
-			void clear()
+			
+			void clear()//CLEAR
 			{
 				_rbt.destroy();
 			}
-			//INSERT
-			ft::pair<iterator, bool> insert(const value_type& value)
+			
+			ft::pair<iterator, bool> insert(const value_type& value)//INSERT
 			{
 				bool tmp = _rbt.insert(value);
 				return (ft::make_pair<iterator, bool>(iterator(_rbt.search(value), _rbt.get_end(), _rbt.get_root()), tmp));
@@ -199,23 +190,19 @@ namespace ft{
 					++first;
 				}
 			}
-			//ERASE
-			iterator erase(iterator pos)
+			
+			iterator erase(iterator pos)//ERASE
 			{
 				_rbt.delete_node(*pos);
 				return end();
 			}
 			iterator erase(iterator first, iterator last)
 			{
-				//last--;
 				while (first != last)
 				{
 					first = find(first->first);
-					//iterator tmp = last--;
 					erase(first++);
-					//_rbt.delete_node(*(first++));
 				}
-				//_rbt.delete_node(*(last));
 				return end();
 			}
 			size_type erase (const Key& key)
@@ -224,30 +211,20 @@ namespace ft{
 					return 1;
 				return 0;
 			}
-			//SWAP
-			void swap(map &other)
+			
+			void swap(map &other)//SWAP
 			{
 				_rbt.swap(other._rbt);
 			}
-			//KEY_COMP
-			/*key_compare key_comp() const
-			{
-				return _comp;
-			}
-			//VALUE_COMP
-			value_compare value_comp() const
-			{
-				return value_compare(_comp);
-			}*/
-			//COUNT
-			size_type count( const Key& key) const
+			
+			size_type count( const Key& key) const//COUNT
 			{
 				if (find(key) != end())
 					return 1;
 				return 0;
 			}
-			//FIND
-			iterator find( const Key& key)
+			
+			iterator find( const Key& key)//FIND
 			{
 				return(iterator(_rbt.search(ft::make_pair(key, mapped_type())), _rbt.get_end(), _rbt.get_root()));
 			}
@@ -255,8 +232,8 @@ namespace ft{
 			{
 				return(const_iterator(_rbt.search(ft::make_pair(key, mapped_type())), _rbt.get_end(), _rbt.get_root()));
 			}
-			//LOWER_BOUND
-			const_iterator lower_bound( const Key& key) const
+			
+			const_iterator lower_bound( const Key& key) const//LOWER_BOUND
 			{
 				return (const_iterator(_rbt.lower_bound(ft::make_pair(key, mapped_type())), _rbt.get_end(), _rbt.get_root()));
 			}
@@ -264,7 +241,7 @@ namespace ft{
 			{
 				return (iterator(_rbt.lower_bound(ft::make_pair(key, mapped_type())), _rbt.get_end(), _rbt.get_root()));
 			}
-			const_iterator upper_bound( const Key& key) const
+			const_iterator upper_bound( const Key& key) const//UPPER_BOUND
 			{
 				return (const_iterator(_rbt.upper_bound(ft::make_pair(key, mapped_type())), _rbt.get_end(), _rbt.get_root()));
 			}
@@ -272,8 +249,8 @@ namespace ft{
 			{
 				return (iterator(_rbt.upper_bound(ft::make_pair(key, mapped_type())), _rbt.get_end(), _rbt.get_root()));
 			}
-			//EQUAL_RANGE
-			ft::pair<iterator, iterator> equal_range(const Key& key)
+			
+			ft::pair<iterator, iterator> equal_range(const Key& key)//EQUAL_RANGE
 			{
 				return (ft::make_pair(lower_bound(key), upper_bound(key)));
 			}
@@ -281,13 +258,13 @@ namespace ft{
 			{
 				return (ft::make_pair(lower_bound(key), upper_bound(key)));
 			}
-			//KEY_COMP
-			key_compare key_comp() const
+			
+			key_compare key_comp() const//KEY_COMP
 			{
 				return (_comp);
 			}
-			//VALUE_COMP
-			value_compare value_comp() const
+			
+			value_compare value_comp() const//VALUE_COMP
 			{
 				return (_comp);
 			}
