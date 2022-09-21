@@ -154,7 +154,10 @@ namespace ft{
 				void insert(InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = ft::nullptr_a)
 			{
 				while(first != last)
-					_rbt.insert(*first++);
+				{
+					_rbt.insert(*first);
+					++first;
+				}
 			}
 		
 			iterator erase(iterator pos)//ERASE
