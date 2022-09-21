@@ -136,7 +136,7 @@ namespace ft{
 		//MAX_SIZE
 			size_type max_size() const
 			{
-				return (_alloc.max_size());
+				return (_rbt.max_size());
 			}
 		//CLEAR
 			void clear()

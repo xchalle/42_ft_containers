@@ -16,12 +16,13 @@ namespace ft{
 		typedef T value_type;
 		typedef node* nodeptr;
 		typedef node& noderef;
+		typedef std::size_t color_type; //bool for sharper prog but diff for max_size
 
 		public:
 			nodeptr parent;
 			nodeptr left;
 			nodeptr right;
-			bool color;
+			color_type color;
 			value_type data;
 
 			node() : parent(NULL), left(NULL), right(NULL), color(BLACK)
