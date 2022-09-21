@@ -239,45 +239,34 @@ namespace ft{
 	template< class Key , class Compare, class Alloc >
 		bool operator==( const ft::set<Key, Compare, Alloc>& lhs, const ft::set<Key, Compare, Alloc>& rhs)
 	{
-		if (ft::equal(lhs.begin(), lhs.end(), rhs.begin()) && ft::equal(rhs.begin(), rhs.end(), lhs.begin()))
-			return true;
-		return false;
-
+		if (lhs.size() != rhs.size())
+			return false;
+		return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
 	}
 	template< class Key , class Compare, class Alloc >
 		bool operator!=( const ft::set<Key, Compare, Alloc>& lhs, const ft::set<Key, Compare, Alloc>& rhs)
 	{
-		if(lhs == rhs)
-			return false;
-		return true;
+		return !(lhs == rhs);
 	}
 	template< class Key , class Compare, class Alloc >
 		bool operator<( const ft::set<Key, Compare, Alloc>& lhs, const ft::set<Key, Compare, Alloc>& rhs)
 	{
-		if(lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()))
-			return true;
-		return false;
+		return (lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
 	}
 	template< class Key , class Compare, class Alloc >
 		bool operator<=( const ft::set<Key, Compare, Alloc>& lhs, const ft::set<Key, Compare, Alloc>& rhs)
 	{
-		if(lhs < rhs || lhs == rhs)
-			return true;
-		return false;
+		return !(rhs < lhs);
 	}
 	template< class Key , class Compare, class Alloc >
 		bool operator>( const ft::set<Key, Compare, Alloc>& lhs, const ft::set<Key, Compare, Alloc>& rhs)
 	{
-		if (lhs <= rhs)
-			return false;
-		return true;
+		return (rhs < lhs);
 	}
 	template< class Key , class Compare, class Alloc >
 		bool operator>=( const ft::set<Key, Compare, Alloc>& lhs, const ft::set<Key, Compare, Alloc>& rhs)
 	{
-		if (lhs < rhs)
-			return false;
-		return true;
+		return !(lhs < rhs);
 	}
 	template<class Key, class Compare, class Alloc>
 		void swap(ft::set<Key, Compare, Alloc>& lhs, ft::set<Key, Compare, Alloc>& rhs)
