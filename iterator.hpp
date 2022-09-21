@@ -116,13 +116,13 @@ namespace ft{
 		}
 		reverse_iterator operator++( int )
 		{
-			reverse_iterator tmp(*this);
+			reverse_iterator tmp = *this;
 			--_itr;
 			return (tmp);
 		}
 		reverse_iterator operator--( int )
 		{
-			reverse_iterator tmp(*this);
+			reverse_iterator tmp = *this;
 			++_itr;
 			return (tmp);
 		}
