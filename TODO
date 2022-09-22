@@ -1,5 +1,5 @@
 check public private function
 check comparaaison
 test
-vector get a _sive var + check for new_size > max_size
 clean vector
+check for AT fct map

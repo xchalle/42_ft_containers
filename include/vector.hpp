@@ -36,6 +36,7 @@ class vector
 			_begin = NULL;
 			_end = NULL;
 			_capacity = 0;
+			_size = 0;
 		}
 
 		~vector()
@@ -47,7 +48,7 @@ class vector
 		template <class InputIt>
 			vector(InputIt first, InputIt last, const Allocator& alloc = Allocator(), typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = ft::nullptr_a ) : _alloc(alloc), _begin(NULL), _end(NULL), _capacity(0)
 		{
-			size_type count = ft::distance(first, last);
+			difference_type count = ft::distance(first, last);
 			_begin = _alloc.allocate(count);
 			_end = _begin;
 			InputIt tmp = first;
@@ -58,7 +59,7 @@ class vector
 				_end++;
 			}
 			_capacity = count;
-
+			_size = count;
 		};
 		explicit vector(size_type count,
 			const T& value = T(),
@@ -67,6 +68,7 @@ class vector
 				_begin = _alloc.allocate(count);
 				_end = _begin;
 				_capacity = count;
+				_size = count;
 				while (count > 0)
 				{
 					_alloc.construct(_end, value);
@@ -80,6 +82,7 @@ class vector
 				_end = NULL;
 				_alloc = other.get_allocator();
 				_capacity = 0;
+				_size = 0;
 				insert(begin(), other.begin(), other.end());
 				//std::cout << "capacity=" << _capacity<< std::endl;
 			}
@@ -95,6 +98,7 @@ class vector
 					_capacity = count;
 				}
 				_end = _begin;
+				_size = count;
 				while (count > 0)
 				{
 					_alloc.construct(_end, value);
@@ -114,6 +118,7 @@ class vector
 					_capacity = count;
 				}
 				_end = _begin;
+				_size = count;
 				while (first != last)
 				{
 					_alloc.construct(_end, *first);
@@ -200,7 +205,7 @@ class vector
 		size_type size() const
 		{
 			//return _end - _begin;
-			return (ft::distance(begin(), end()));
+			return (_size);
 		};
 //	MAX_SIZE 
 		size_type max_size() const
@@ -247,12 +252,13 @@ class vector
 				_end--;
 			}
 			_alloc.destroy(_end);*/
-			size_type _size = this->size();
+			//size_type _size = this->size();
 			for (size_type i = 0; i < _size; ++i)
 			{
 				_alloc.destroy(_begin + i);
 			}
 			_end = _begin;
+			_size = 0;
 		};
 	//	INSERT 
 		iterator insert( iterator pos, const T& value )
@@ -278,6 +284,7 @@ class vector
 			for (int i = 0; i < count; i++)
 				_alloc.construct(_end - pos_int + i, value);
 			_end += count;
+			_size += count;
 			return (end() - pos_int - 1);
 		}
 		/*iterator insert( iterator pos, const T& value )
@@ -337,6 +344,7 @@ class vector
 			for (size_type i = 0; i < count; i++)
 				_alloc.construct(_end - pos_int + i, value);
 			_end += count;
+			_size += count;
 			return;
 		}
 		/*void insert( iterator pos, size_type count, const T& value )
@@ -406,6 +414,7 @@ class vector
 				++first;
 			}
 			_end += count;
+			_size += count;
 			return;
 		}
 
@@ -469,6 +478,7 @@ class vector
 				}
 			}
 			_end--;
+			_size--;
 			return (_return_val);
 		}
 		iterator erase( iterator first, iterator last )
@@ -488,6 +498,7 @@ class vector
 				_alloc.destroy(&(*last) + i);
 			}
 			_end -= count;
+			_size -= count;
 			return(first);
 		}
 	//	PUSH_BACK 
@@ -506,12 +517,14 @@ class vector
 			}
 			_alloc.construct(_end, value);
 			_end++;
+			_size++;
 		}
 	//	POP_BACK 
 		void pop_back()
 		{
 			_end--;
 			_alloc.destroy(_end);
+			_size--;
 		}
 	//	RESIZE 
 		void resize( size_type count, T value = T() )
@@ -528,7 +541,7 @@ class vector
 				}
 				_alloc.destroy(_end);
 				_end = _begin + count;
-
+				_size = count;
 			}
 			else if (size() < count)
 			{
@@ -549,6 +562,7 @@ class vector
 				{
 					_alloc.construct(_end, value);
 					++_end;
+					++_size;
 				}
 			}
 		}
@@ -558,19 +572,23 @@ class vector
 			pointer tmp_begin;
 			pointer tmp_end;
 			Allocator tmp_alloc;
-			difference_type tmp_capacity;
+			size_type tmp_capacity;
+			size_type tmp_size;
 			tmp_begin = _begin;
 			tmp_end = _end;
 			tmp_alloc = _alloc;
 			tmp_capacity = _capacity;
+			tmp_size = _size;
 			_begin = other._begin;
 			_end = other._end;
 			_alloc = other._alloc;
 			_capacity = other._capacity;
+			_size = other._size;
 			other._begin = tmp_begin;
 			other._end = tmp_end;
 			other._alloc = tmp_alloc;
 			other._capacity = tmp_capacity;
+			other._size = tmp_size;
 		}
 	//	OPERATOR =
 		vector& operator=(const vector& other)
@@ -588,6 +606,7 @@ class vector
 			pointer	_begin;
 			pointer	_end;
 			size_type _capacity;
+			size_type _size;
 
 	};
 	/*template <class T, class U, class Alloc>

@@ -79,6 +79,7 @@ namespace ft{
 				_end = _node_alloc.allocate(1);
 				_node_alloc.construct(_end, node_type());
 				_root = _end;
+				_size = 0;
 			}
 	
 			~rb_tree() {}
@@ -110,7 +111,7 @@ namespace ft{
 				return size(s->right) + size(s->left) + 1;
 			}
 	
-			size_type	size()                        const { return size(_root); }
+			size_type	size()                        const { return _size; }
 			size_type	max_size()                    const { return _node_alloc.max_size(); }
 			pointer		search(const value_type& key) const { return __search_wrapper(_root, key); }
 	
@@ -170,6 +171,7 @@ namespace ft{
 				}
 	
 				s->parent = y;
+				++_size;
 				if (y == NULL)
 					_root = s;
 				else if (_cmp(s->data, y->data))
@@ -237,12 +239,22 @@ namespace ft{
 			{
 				pointer			tmp_root = _root;
 				pointer			tmp_end = _end;
+				value_compare		tmp_cmp = _cmp;
+				allocator_type		tmp_alloc = _node_alloc;
+				size_type		tmp_size = _size;
 	
 	
 				_root = ref.get_root();
 				_end = ref.get_end();
+				_cmp = ref._cmp;
+				_node_alloc = ref._node_alloc;
+				_size = ref.size();
+
 				ref._root = tmp_root;
 				ref._end = tmp_end;
+				ref._cmp = tmp_cmp;
+				ref._node_alloc = tmp_alloc;
+				ref._size = tmp_size;
 			}
 	
 	
@@ -495,6 +507,7 @@ namespace ft{
 				_node_alloc.destroy(z);
 				_node_alloc.deallocate(z, 1);
 	
+				--_size;
 				if (y_original_color == BLACK)
 					_fix_delete(x);
 				return true;
@@ -508,14 +521,16 @@ namespace ft{
 				_destroy(root->right);
 				_node_alloc.destroy(root);
 				_node_alloc.deallocate(root, 1);
+				--_size;
 			}
 	
 		private:
 
-			allocator_type _node_alloc;
+			allocator_type	_node_alloc;
 			value_compare	_cmp;
-			pointer			_root;
-			pointer			_end;
+			pointer		_root;
+			pointer		_end;
+			size_type	_size;
 	};
 }
 #endif

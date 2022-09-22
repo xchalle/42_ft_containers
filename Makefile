@@ -17,12 +17,10 @@ CXXFLAGS= -Wall -Wextra -Werror -std=c++98 -I./include/
 
 RM = rm -rf
 
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o ${<:.cpp=.o}
 
-$(NAME): $(OBJS)
-	$(CXX) $(CXXFLAGS) -D NAMESPACE=ft -o $@ $^
-	$(CXX) $(CXXFLAGS) -D NAMESPACE=std -o $@_std $^
+$(NAME): $(OBJS) 
+	$(CXX) $(CXXFLAGS) -o $@ ${OBJS}
+	$(CXX) $(CXXFLAGS) -D NAMESPACE=std -o $@_std ${SRCS}
 
 all: $(NAME)
 
@@ -31,6 +29,7 @@ clean:
 
 fclean: clean
 	$(RM) $(NAME)
+	$(RM) $(NAME)_std
 
 re: fclean all
 

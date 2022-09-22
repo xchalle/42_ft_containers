@@ -14,7 +14,9 @@
 
 #define MAX_RAM 4294967296
 #define BUFFER_SIZE 4096
+#ifndef NAMESPACE
 #define NAMESPACE ft
+#endif
 struct Buffer
 {
 	int idx;
@@ -71,6 +73,14 @@ int main(int argc, char** argv) {
 	{
 		const int idx = rand() % COUNT;
 		vector_buffer[idx].idx = 5;
+	}
+	try
+	{
+		vector_buffer.at(1000000000);
+	}
+	catch(const std::exception& e)
+	{
+		std::cout << e.what() << std::endl;
 	}
 	NAMESPACE::vector<Buffer>().swap(vector_buffer);
 
