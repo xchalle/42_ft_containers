@@ -52,7 +52,7 @@ namespace ft{
 			{
 				return (c);
 			}
-		private:
+		protected:
 
 			container_type c;
 	};
