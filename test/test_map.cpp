@@ -1,6 +1,6 @@
 typedef NAMESPACE::map<std::string, std::string>::value_type _P;
 
-test_map()
+construct_map()
 {
 	NAMESPACE::map<std::string, std::string> m1;
 	std::cout << "map1 contain:" <<std::endl;
@@ -21,5 +21,5 @@ test_map()
 	NAMESPACE::map<std::string, std::string> m4(m1.begin, m1.last);
 	std::cout << "map construct iterator range :" <<std::endl;
 	print_map(m4);
-
 }
+
