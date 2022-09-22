@@ -493,16 +493,16 @@ class vector
 	//	PUSH_BACK 
 		void push_back( const T& value )
 		{
-			if ((size() + 1) > capacity())
+			if ((size() + 1) > _capacity)
 			{
-				if (size() == 0 && capacity() == 0)
+				if (size() == 0 && _capacity == 0)
 				{
 						_begin = _alloc.allocate(1);
 					_end = _begin;
 					_capacity = 1;
 				}
 				else
-					reserve(capacity() * 2);
+					reserve(_capacity * 2);
 			}
 			_alloc.construct(_end, value);
 			_end++;

@@ -21,7 +21,8 @@ RM = rm -rf
 	$(CXX) $(CXXFLAGS) -c $< -o ${<:.cpp=.o}
 
 $(NAME): $(OBJS)
-	$(CXX) $(CXXFLAGS) -o $@ $^
+	$(CXX) $(CXXFLAGS) -D NAMESPACE=ft -o $@ $^
+	$(CXX) $(CXXFLAGS) -D NAMESPACE=std -o $@_std $^
 
 all: $(NAME)
 
