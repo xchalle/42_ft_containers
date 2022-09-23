@@ -102,7 +102,6 @@ namespace ft
 			}
 			reference operator[](difference_type n)
 			{
-				//return ((*(_itr + n - 1));
 				return *(*this + n);
 			}
 			reverse_iterator& operator++()

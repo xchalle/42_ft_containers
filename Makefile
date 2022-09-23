@@ -1,5 +1,9 @@
 SRC = \
-      	main.cpp
+	test_map.cpp \
+	test_vector.cpp \
+	test_set.cpp \
+	test_stack.cpp \
+      	main.cpp \
 
 SRCSDIR = ./test
 
@@ -13,7 +17,7 @@ NAME = ft_containers
 
 CXX = c++
 
-CXXFLAGS= -Wall -Wextra -Werror -std=c++98 -I./include/
+CXXFLAGS= -Wall -Wextra -Werror -std=c++98 -I./include/ -I./test/include/
 
 RM = rm -rf
 
