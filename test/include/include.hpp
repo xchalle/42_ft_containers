@@ -1,5 +1,6 @@
 #ifndef INCLUDE_HPP
 #define INCLUDE_HPP
+
 #define MAX_RAM 4294967296
 #define BUFFER_SIZE 4096
 #ifndef NAMESPACE
@@ -23,12 +24,12 @@
 #include <vector>
 #endif
 
-#ifndef MYCONT
-#define MYCONT
-#include <map.hpp>
-#include <stack.hpp>
-#include <vector.hpp>
-#endif
+//#ifndef MYCONT
+//#define MYCONT
+//#include <map.hpp>
+//#include <stack.hpp>
+//#include <vector.hpp>
+//#endif
 
 #include <stdlib.h>
 

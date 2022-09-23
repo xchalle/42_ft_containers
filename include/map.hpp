@@ -30,7 +30,6 @@ namespace ft{
 			typedef typename Allocator::const_pointer const_pointer;
 			typedef ft::bidirectional_iterator<node< value_type>, value_type> iterator;
 			typedef ft::bidirectional_iterator<node< value_type>, const value_type> const_iterator;
-			//class iterator;
 			typedef ft::reverse_iterator<iterator> reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 		protected:
@@ -46,15 +45,15 @@ namespace ft{
 				typedef value_type second_argument_type;
 
 				protected :
-				value_compare( key_compare c) : _comp(c)
-				{
-				}
-				key_compare _comp;
+					value_compare( key_compare c) : _comp(c)
+					{}
+
+					key_compare _comp;
 				public:
-				result_type operator() ( const value_type& lhs, const value_type& rhs) const
-				{
-					return _comp(lhs.first, rhs.first);
-				}
+					result_type operator() ( const value_type& lhs, const value_type& rhs) const
+					{
+						return _comp(lhs.first, rhs.first);
+					}
 			};
 
 		protected:

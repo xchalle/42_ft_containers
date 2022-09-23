@@ -10,6 +10,7 @@ int main(int ac, char** av)
 	if (ac != 2)
 	{
 		std::cout << "Usage: ft_container <container>/all" << std::endl;
+		return 0;
 	}
 	std::string tmp = av[1];
 	if (tmp == std::string("vector"))
