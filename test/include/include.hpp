@@ -15,14 +15,20 @@
 //#include "test_stack.cpp"
 
 
+#ifndef STDCONT
+#define STDCONT
 #include <deque>
 #include <map>
 #include <stack>
 #include <vector>
+#endif
 
+#ifndef MYCONT
+#define MYCONT
 #include <map.hpp>
 #include <stack.hpp>
 #include <vector.hpp>
+#endif
 
 #include <stdlib.h>
 

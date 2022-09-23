@@ -1,9 +1,9 @@
 SRC = \
+      	main.cpp \
 	test_map.cpp \
 	test_vector.cpp \
 	test_set.cpp \
 	test_stack.cpp \
-      	main.cpp \
 
 SRCSDIR = ./test
 
