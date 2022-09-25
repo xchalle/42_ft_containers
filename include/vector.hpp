@@ -402,11 +402,11 @@ class vector
 		
 		iterator erase( iterator first, iterator last )
 		{
-			pointer tmp = &(*first);
 			if (first == last)
 			{
 				return (last);
 			}
+			pointer tmp = &(*first);
 			size_type count = ft::distance(first, last);
 			for (; first < last; ++first)
 					_alloc.destroy(&(*first));

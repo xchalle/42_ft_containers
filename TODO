@@ -1,5 +1,4 @@
-//check public private function
-//check comparaaison
-test
+finish test
 clean vector
-check for AT fct map
+rm AT fct map
+test rit[] for map and compare to stl
