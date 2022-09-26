@@ -252,7 +252,6 @@ class vector
 		
 		void reserve( size_type new_cap)
 		{
-			//std::cout << "resize" << std::endl;
 			if (new_cap > max_size())
 				throw(std::length_error("vector::reserve"));
 			if (new_cap <= capacity())
@@ -521,22 +520,7 @@ class vector
 			size_type _size;
 
 	};
-	/*template <class T, class U, class Alloc>
-	bool operator==(const ft::vector<T, Alloc>& lhs, const ft::vector<U, Alloc>& rhs)
-	{
-		if (lhs.size() != rhs.size())
-			return false;
-		typename ft::vector<T>::const_iterator l_end = lhs.end();
-		typename ft::vector<U>::const_iterator r_end = rhs.end();
-		typename ft::vector<U>::const_iterator r_begin = rhs.begin();
-		for(typename ft::vector<T>::const_iterator l_begin = lhs.begin(); l_begin != l_end; l_begin++)
-		{
-			if (*l_begin != *r_begin)
-				return false;
-			r_begin++;
-		}
-		return true;
-	};*/
+
 	template <class T, class Alloc>
 	bool operator==(const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs)
 	{
@@ -561,14 +545,7 @@ class vector
 			return false;
 		return true;
 	};
-	/*template< class T, class U, class Alloc >
-	bool operator!=( const ft::vector<T,Alloc>& lhs,
-			 const ft::vector<U,Alloc>& rhs )
-	{
-		if (lhs == rhs)
-			return false;
-		return true;
-	};*/
+
 	template< class T, class Alloc >
 	bool operator<( const ft::vector<T,Alloc>& lhs, const ft::vector<T,Alloc>& rhs )
 	{

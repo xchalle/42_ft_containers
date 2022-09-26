@@ -96,14 +96,7 @@ namespace ft{
 			}
 			
 			allocator_type get_allocator() const {return (_alloc);}//GET_ALLOCATOR
-			mapped_type& at( const key_type& key)//AT
-			{ 
-				return (_rbt.search(ft::make_pair(key, mapped_type()))->data.second);
-			}
-			const mapped_type& at( const key_type& key) const
-			{
-				return (_rbt.search(ft::make_pair(key, mapped_type()))->data.second);
-			}
+
 			mapped_type& operator[]( const key_type& key)//OPERATOR[]
 			{
 				insert(ft::make_pair(key, mapped_type()));
