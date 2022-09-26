@@ -29,23 +29,24 @@ OBJDIR_STD = $(SRCSDIR)/objects_std
 
 SRCS = ${SRC:%.cpp=$(SRCSDIR)/%.cpp}
 
-OBJS_FT : $(SRCS)
-	$(CXX) $(CXXFLAGS) -DNAMESPACE=ft -c $(SRCS)
-OBJS_STD : $(SRCS)
-	$(CXX) $(CXXFLAGS) -DNAMESPACE=std -c $(SRCS)
+OBJS_FT = $(SRCS:.cpp=.o)
+OBJS_STD = $(SRCS:.cpp=.o)
 
 NAME = ft_containers
 
 CXX = c++
 
-CXXFLAGS= -Wall -Wextra -Werror -std=c++98 -I./include/ -I./test/include/
+CXXFLAGS_FT= -Wall -Wextra -Werror -std=c++98 -I./include/ -I./test/include/ -DNAMESPACE=ft
+CXXFLAGS_STD= -Wall -Wextra -Werror -std=c++98 -I./include/ -I./test/include/ -DNAMESPACE=std
 
 RM = rm -rf
 
+.cpp.o :
+	$(CXX) $(CXXFLAGS_FT) -c $< -o ${<:.cpp=.o}
 
 $(NAME): $(OBJS_FT) $(OBJS_STD) 
-	$(CXX) $(CXXFLAGS) -DNAMESPACE=ft -o $@ ${OBJS_FT}
-	$(CXX) $(CXXFLAGS) -DNAMESPACE=std -o $@_std ${OBJS_STD}
+	$(CXX) $(CXXFLAGS_FT) -o $@ ${OBJS_FT}
+	$(CXX) $(CXXFLAG_STD) -o $@_std ${OBJS_STD}
 
 all: $(NAME)
 

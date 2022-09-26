@@ -2,7 +2,7 @@
 
 #define TBH 10
 
-void test_iterator()
+static void test_iterator()
 {
         NAMESPACE::set<int> a;
 	for (int i; i < TBH; i++)
@@ -29,6 +29,7 @@ void test_iterator()
                 std::cout << *it << std::endl;
         std::cout  << std::endl;
 }
+
 void set_iterator()
 {
         std::cout <<"##########ITERATOR##########" << std::endl;

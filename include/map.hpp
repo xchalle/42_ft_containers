@@ -2,8 +2,8 @@
 #define MAP_HPP
 
 #include <iostream>
-#include "utils.hpp"
 #include "compare.hpp"
+#include "utils.hpp"
 #include "pair.hpp"
 #include "rb_tree.hpp"
 #include "enable_if.hpp"

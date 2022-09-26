@@ -1,6 +1,6 @@
 #include "../include/include.hpp"
 
-void test_iterator()
+static void test_iterator()
 {
 	NAMESPACE::vector<int> a(10, 10);
 	a.push_back(11);
