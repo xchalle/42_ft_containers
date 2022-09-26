@@ -39,7 +39,7 @@ class vector
 
 		
 		template <class InputIt>
-			vector(InputIt first, InputIt last, const Allocator& alloc = Allocator(), typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = ft::nullptr_a ) : _alloc(alloc), _begin(NULL), _end(NULL), _capacity(0)
+			vector(InputIt first, InputIt last, const Allocator& alloc = Allocator(), typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = ft::nullptr_ ) : _alloc(alloc), _begin(NULL), _end(NULL), _capacity(0)
 		{
 			difference_type count = ft::distance(first, last);
 			_begin = _alloc.allocate(count);
@@ -118,7 +118,7 @@ class vector
 		};
 
 		template <class InputIt>
-			void assign(InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = ft::nullptr_a) //change for distance
+			void assign(InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = ft::nullptr_) //change for distance
 		{
 			size_type count = ft::distance(first, last);
 			clear();
@@ -349,7 +349,7 @@ class vector
 		}
 
 		template< class InputIt>
-			void insert( iterator pos, InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = ft::nullptr_a)
+			void insert( iterator pos, InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = ft::nullptr_)
 		{
 			difference_type count = ft::distance(first, last);
 			if (count == 0)

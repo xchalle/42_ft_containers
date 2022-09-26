@@ -1,4 +1,4 @@
-#ifndef NODE_HPP
+/*#ifndef NODE_HPP
 #define NODE_HPP
 
 template <typename T>
@@ -29,4 +29,4 @@ class Node
 		Node	*_inhe = std::nullptr;
 		T	_pair;
 }
-#endif
+#endif*/

@@ -151,7 +151,7 @@ namespace ft{
 				return(iterator(_rbt.search(value), _rbt.get_end(), _rbt.get_root()));
 			}
 			template<class InputIt>
-				void insert(InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = ft::nullptr_a)
+				void insert(InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = ft::nullptr_)
 			{
 				while(first != last)
 				{

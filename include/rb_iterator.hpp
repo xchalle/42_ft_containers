@@ -6,7 +6,7 @@
 
 namespace ft{
 
-	template < typename Node, class T>
+/*	template < typename Node, class T>
 		class const_bidirectional_iterator : public ft::iterator<std::bidirectional_iterator_tag, T>
 	{
 		public:
@@ -18,7 +18,7 @@ namespace ft{
 			typedef typename ft::iterator<bidirectional_iterator_tag, T>::reference reference;
 			typedef typename ft::iterator<bidirectional_iterator_tag, T>::pointer pointer;
 			typedef typename ft::iterator<bidirectional_iterator_tag, T>::value_type value_type;
-			const_bidirectional_iterator() : _node(ft::nullptr_a), _end(ft::nullptr_a), _root(ft::nullptr_a)
+			const_bidirectional_iterator() : _node(ft::nullptr_), _end(ft::nullptr_), _root(ft::nullptr_)
 			{}
 			const_bidirectional_iterator(const nodeptr _ptr, const nodeptr end, const nodeptr root) : _node(_ptr), _end(end), _root(root)
 			{}
@@ -191,7 +191,7 @@ namespace ft{
 	{
 		return (lhs.get_ptr() != rhs.get_ptr());
 	}
-
+*/
 	template < typename Node, class T>
 		class bidirectional_iterator : public ft::iterator<std::bidirectional_iterator_tag, T>
 	{
@@ -205,7 +205,7 @@ namespace ft{
 			typedef typename ft::iterator<bidirectional_iterator_tag, T>::reference reference;
 			typedef typename ft::iterator<bidirectional_iterator_tag, T>::pointer pointer;
 			
-			bidirectional_iterator() : _node(ft::nullptr_a), _end(ft::nullptr_a), _root(ft::nullptr_a)
+			bidirectional_iterator() : _node(ft::nullptr_), _end(ft::nullptr_), _root(ft::nullptr_)
 			{}
 			
 			bidirectional_iterator(const nodeptr _ptr, const nodeptr end, const nodeptr root) : _node(_ptr), _end(end), _root(root)

@@ -15,7 +15,7 @@ namespace ft{
 		template<class C, class T>
 			inline operator T C::*() const { return 0; }
 	};
-	#define nullptr_a nullptr_p()
+	#define nullptr_ nullptr_p()
 
 	template < class InputIt1, class InputIt2>
 		bool lexicographical_compare(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2)

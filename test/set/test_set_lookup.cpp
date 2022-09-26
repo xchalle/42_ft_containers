@@ -14,7 +14,7 @@ static void test_lookup()
 	std::cout << "count 0 is in the set " << a.count(0) << std::endl;
 	std::cout << "count TBH is in the set " << a.count(TBH) << std::endl;
 	std::cout << "find 5  in the set " << *(a.find(5)) << std::endl;
-	std::cout << "diff is ok = find out of the set TBH " << *(a.find(TBH + 128)) << std::endl;
+//	std::cout << "diff is ok = find out of the set TBH " << *(a.find(TBH + 128)) << std::endl;
 	std::cout << "equal range of 5" << *((a.equal_range(5)).first) << *((a.equal_range(5)).second) << std::endl;
 	std::cout << "lower TBH  in the set " << *(a.lower_bound(5)) << std::endl;
 	std::cout << "upper TBH  in the set " << *(a.upper_bound(5)) << std::endl;
