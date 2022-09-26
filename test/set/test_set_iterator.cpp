@@ -29,4 +29,11 @@ void test_iterator()
                 std::cout << *it << std::endl;
         std::cout  << std::endl;
 }
-
+void set_iterator()
+{
+        std::cout <<"##########ITERATOR##########" << std::endl;
+        std::cout << std::endl;
+        std::cout <<"----------iterator--------------" << std::endl;
+        std::cout << std::endl;
+        test_iterator();
+}

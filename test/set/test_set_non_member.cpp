@@ -29,3 +29,12 @@ static void test_non_member()
         std::cout <<"myset2.size= " << myset2.size() << std::endl;   
 
 }
+
+void set_non_member()
+{
+	                std::cout <<"##########NON_MEMBER##########" << std::endl;
+        std::cout << std::endl;
+        std::cout <<"----------non_member--------------" << std::endl;
+        std::cout << std::endl;
+        test_non_member();
+}

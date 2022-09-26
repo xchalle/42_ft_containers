@@ -4,7 +4,7 @@
  
 typedef int T;
  
-void test_()
+void test_modifier()
 {   
         NAMESPACE::set<T> a;
         std::cout << " set1.insert(T& value) " <<std::endl;
@@ -29,3 +29,12 @@ void test_()
 	a.clear();
 }
 
+void set_modifier()
+{
+	                std::cout <<"##########MODIFIER##########" << std::endl;
+        std::cout << std::endl;
+        std::cout <<"----------modifier--------------" << std::endl;
+        std::cout << std::endl;
+        test_modifier();
+
+}

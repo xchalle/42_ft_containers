@@ -23,17 +23,17 @@
 #include <stdlib.h>
 
 template <typename T, typename U>
-void print_map(NAMESPACE::map<T, U> &mymap)
+void print_map(const NAMESPACE::map<T, U> &mymap)
 {
-        for(typename NAMESPACE::map<T, U>::iterator it = mymap.begin(); it != mymap.end(); it++)
+        for(typename NAMESPACE::map<T, U>::const_iterator it = mymap.begin(); it != mymap.end(); it++)
                 std::cout << "["<< it->first << "]"<< "->" << "[" << it->second << "]" << std::endl;
         std::cout << std::endl << "size = "<< mymap.size() <<std::endl;
 }
 
 template <typename T>
-void print_vector(NAMESPACE::vector<T> &myvec)
+void print_vector(const NAMESPACE::vector<T> &myvec)
 {
-        for(typename NAMESPACE::vector<T>::iterator it = myvec.begin(); it != myvec.end(); it++)
+        for(typename NAMESPACE::vector<T>::const_iterator it = myvec.begin(); it != myvec.end(); it++)
                 std::cout << "["<< *it << "]"<< std::endl;
         std::cout << std::endl << "size = "<< myvec.size() <<std::endl;
 }

@@ -59,7 +59,15 @@ static void             test_empty(void)
 
 void map_capacity()
 {
+	        std::cout <<"##########CAPACITY##########" << std::endl;
+        std::cout << std::endl;
+        std::cout <<"----------empty--------------" << std::endl;
+        std::cout << std::endl;
 	test_empty();
+        std::cout <<"----------max_size--------------" << std::endl;
+        std::cout << std::endl;
 	test_max_size();
+        std::cout <<"----------size--------------" << std::endl;
+        std::cout << std::endl;
 	test_size();
 }

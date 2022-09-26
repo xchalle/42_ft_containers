@@ -32,7 +32,7 @@ static void		test_value_comp(void)
 	c1[3] = 3;
 	c1[4] = 4;
 
-	display_map("c1", c1);
+	print_map(c1);
 	std::cout << "it = c1.find(2)" << std::endl;
 	it = c1.find(2);
 	std::cout << "it_2 = c1.find(4)" << std::endl << std::endl;

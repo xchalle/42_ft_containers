@@ -13,7 +13,7 @@ static void test_lookup()
 	std::cout << "count TBH is in the set " << a.count(TBH) << std::endl;
 	std::cout << "find 5  in the set " << *(a.find(5)) << std::endl;
 	std::cout << "find TBH  in the set " << *(a.find(TBH)) << std::endl;
-	std::cout << "equal range of 5" << (a.equal_range(5))->first << (a.equal_range(5))->second << std::endl;
+	std::cout << "equal range of 5" << *((a.equal_range(5)).first) << *((a.equal_range(5)).second) << std::endl;
 	std::cout << "lower TBH  in the set " << *(a.lower_bound(5)) << std::endl;
 	std::cout << "upper TBH  in the set " << *(a.upper_bound(5)) << std::endl;
 }
@@ -39,4 +39,17 @@ static void test_observer()
 
 	std::cout << "key_comp = " << key_compare(1, 2)<< std::endl;
 	std::cout << "value_comp = " << value_compare(1, 2) << std::endl;
+}
+
+void set_lookup()
+{
+	                std::cout <<"##########LOOKUP##########" << std::endl;
+        std::cout << std::endl;
+        std::cout <<"----------lookup--------------" << std::endl;
+        std::cout << std::endl;
+        test_lookup();
+        std::cout <<"----------observer--------------" << std::endl;
+        std::cout << std::endl;
+        test_observer();
+
 }

@@ -64,6 +64,6 @@ void vector_modifiers()
         std::cout << std::endl;
         std::cout <<"----------insert/clear/erase/pop_back/swap/assign--------------" << std::endl;
         std::cout << std::endl;
-        test_subscript_operator();
+        test_modifier();
 
 }

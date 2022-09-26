@@ -16,8 +16,8 @@ static void		test_find(void)
 	const NAMESPACE::map<std::string, std::string>					const_animal_size(animal_size.begin(), animal_size.end());
 	NAMESPACE::map<std::string, std::string>::const_iterator		c_it;
 
-	display_map("animal_size", animal_size);
-	display_map("const_animal_size", const_animal_size);
+	print_map(animal_size);
+	print_map(const_animal_size);
 
 	it = animal_size.find("elephant");
 	c_it = const_animal_size.find("elephant");
@@ -48,7 +48,7 @@ static void		test_count(void)
 	c1[4] = "four";
 	c1[5] = "five";
 
-	display_map("c1", c1);
+        print_map(c1);
 
 	std::cout << "c1.count(4) = " << c1.count(4) << std::endl;
 	std::cout << "c1.count(23) = " << c1.count(23) << std::endl;
@@ -71,12 +71,13 @@ static void		test_lower_bound(void)
 	c1[35] = "thirty-five";
 	const NAMESPACE::map<int, std::string>		const_c1(c1);
 
-	display_map("c1", c1);
+	print_map(c1);
+
 	std::cout << "c1.lower_bound(7)->first) = " << c1.lower_bound(7)->first << std::endl;
 	std::cout << "c1.lower_bound(25)->first) = " << c1.lower_bound(25)->first << std::endl;
 	std::cout << "c1.lower_bound(32)->first) = " << c1.lower_bound(32)->first << std::endl << std::endl;
 
-	display_map("const_c1", const_c1);
+	print_map(const_c1);
 	std::cout << "const_c1.lower_bound(7)->first) = " << const_c1.lower_bound(7)->first << std::endl;
 	std::cout << "const_c1.lower_bound(25)->first) = " << const_c1.lower_bound(25)->first << std::endl;
 	std::cout << "const_c1.lower_bound(32)->first) = " << const_c1.lower_bound(32)->first << std::endl;
@@ -99,14 +100,15 @@ static void		test_upper_bound(void)
 	c1[35] = "thirty-five";
 
 
-	display_map("c1", c1);
+	print_map(c1);
+
 	std::cout << "c1.upper_bound(7)->first) = " << c1.upper_bound(7)->first << std::endl;
 	std::cout << "c1.upper_bound(25)->first) = " << c1.upper_bound(25)->first << std::endl;
 	std::cout << "c1.upper_bound(32)->first) = " << c1.upper_bound(32)->first << std::endl << std::endl;
 
 	const NAMESPACE::map<int, std::string>		const_c1(c1);
 
-	display_map("const_c1", const_c1);
+	print_map(const_c1);
 	std::cout << "const_c1.upper_bound(7)->first) = " << const_c1.upper_bound(7)->first << std::endl;
 	std::cout << "const_c1.upper_bound(25)->first) = " << const_c1.upper_bound(25)->first << std::endl;
 	std::cout << "const_c1.upper_bound(32)->first) = " << const_c1.upper_bound(32)->first << std::endl;
@@ -128,7 +130,7 @@ static void		test_equal_range(void)
 	c1[25] = "twenty-five";
 	c1[30] = "thirty";
 	c1[35] = "thirty-five";
-	display_map("c1", c1);
+	print_map(c1);
 
 	std::cout << "ret = c1.equal_range(15)" << std::endl;
 	ret = c1.equal_range(15);
@@ -144,7 +146,7 @@ static void		test_equal_range(void)
 	const NAMESPACE::map<int, std::string>		const_c1(c1);
 	NAMESPACE::pair<NAMESPACE::map<int, std::string>::const_iterator, NAMESPACE::map<int, std::string>::const_iterator>		const_ret;
 	
-	display_map("const_c1", const_c1);
+	print_map(const_c1);
 
 	std::cout << "ret = const_c1.equal_range(15)" << std::endl;
 	const_ret = const_c1.equal_range(15);
@@ -162,7 +164,7 @@ static void		test_equal_range(void)
 	std::cout << std::endl;
 }
 
-test_lookup()
+void map_lookup()
 {
 	        std::cout <<"##########LOOKUP##########" << std::endl;
         std::cout << std::endl;
