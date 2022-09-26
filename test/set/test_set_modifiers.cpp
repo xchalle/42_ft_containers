@@ -17,10 +17,10 @@ void test_modifier()
         b.insert(a.end(), 5);
         std::cout << " set2.erase(set2.first(),  set2.last()) " <<std::endl;
         b.erase(--(--b.end()), b.end());
-        std::cout << " set2.erase(set2.iterator()) " <<std::endl;
-        b.erase(b.end());
-        std::cout << " set2.erase(set2.iterator()) " <<std::endl;
-        b.erase(b.end());
+        //std::cout << " set2.erase(set2.iterator()) " <<std::endl;
+        //b.erase(b.end());
+        //std::cout << " set2.erase(set2.iterator()) " <<std::endl;
+        //b.erase(b.end());
 	std::cout << "set1.erase(key) = " << a.erase(0)<< std::endl;
 	std::cout << "set1.erase(key) = " << a.erase(-1)<< std::endl;
 	std::cout << " set2.pop_back() " <<std::endl;

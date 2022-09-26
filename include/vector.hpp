@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <memory>
 #include <cstddef>
+#include <sstream>
 #include <stdexcept>
 #include "enable_if.hpp"
 #include "is_integral.hpp"
@@ -162,14 +163,18 @@ class vector
 
 		reference at( size_type pos )
 		{
+			std::stringstream out_range;
+			out_range << "vector::_M_range_check: __n (which is " << pos << ") >= this->size() (which is " << _size << ")";
 			if (pos >= this->size())
-				throw std::out_of_range("vector::at");
+				throw std::out_of_range(out_range.str());
 			return ((*this)[pos]);	
 		};
 		const_reference at( size_type pos ) const
 		{
+			std::stringstream out_range;
+			out_range << "vector::_M_range_check: __n (which is " << pos << ") >= this->size() (which is " << _size << ")";
 			if (pos >= this->size())
-				throw std::out_of_range("vector::at");
+				throw std::out_of_range(out_range.str());
 			return ((*this)[pos]);
 		};
 
@@ -444,8 +449,6 @@ class vector
 
 		void pop_back()
 		{
-			if (_size == 0)
-				return ;
 			_end--;
 			_alloc.destroy(_end);
 			_size--;

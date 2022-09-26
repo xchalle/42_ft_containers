@@ -31,7 +31,7 @@ OBJDIR_STD = $(SRCSDIR)/objects_std
 SRCS = ${SRC:%.cpp=$(SRCSDIR)/%.cpp}
 
 OBJS_FT = $(SRCS:.cpp=.o)
-OBJS_STD = $(SRCS:.cpp=.o)
+OBJS_STD = $(SRCS:.cpp=_std.o)
 
 NAME = ft_containers
 
@@ -44,6 +44,7 @@ RM = rm -rf
 
 .cpp.o :
 	$(CXX) $(CXXFLAGS_FT) -c $< -o ${<:.cpp=.o}
+	$(CXX) $(CXXFLAGS_STD) -c $< -o ${<:.cpp=_std.o}
 
 $(NAME): $(OBJS_FT) $(OBJS_STD) 
 	$(CXX) $(CXXFLAGS_FT) -o $@ ${OBJS_FT}

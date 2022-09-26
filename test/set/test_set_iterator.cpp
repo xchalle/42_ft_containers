@@ -5,9 +5,10 @@
 static void test_iterator()
 {
         NAMESPACE::set<int> a;
-	for (int i; i < TBH; i++)
+	for (int i = 0; i < TBH; i++)
 		a.insert(i);
         a.insert(11);
+	std::cout << "print first set:" << std::endl;
 	print_set(a);
         NAMESPACE::set<int>::iterator it = a.begin();
         NAMESPACE::set<int>::const_iterator ite = a.end();

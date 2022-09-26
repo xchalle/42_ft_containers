@@ -27,19 +27,19 @@ static void		test_max_size(void)
 	std::cout << ">> Test max size function" << std::endl;
 	std::cout << std::endl;
 
-	NAMESPACE::vector<bool>				boolean;
+	NAMESPACE::vector<int>				nbrs;
 	NAMESPACE::vector<std::string>			strs(3, "string");
 
-	boolean.push_back(true);
-	boolean.push_back(false);
-	boolean.push_back(true);
+	nbrs.push_back(1);
+	nbrs.push_back(2);
+	nbrs.push_back(3);
 
 	std::cout << "print vector1" << std::endl;
-	print_vector(boolean);
+	print_vector(nbrs);
 	std::cout << "print vector2" << std::endl;
 	print_vector(strs);
 
-	std::cout << "nbrs.max_size() = " << boolean.max_size() << std::endl;
+	std::cout << "nbrs.max_size() = " << nbrs.max_size() << std::endl;
 	std::cout << "strs.max_size() = " << strs.max_size() << std::endl;
 
 	std::cout << std::endl;

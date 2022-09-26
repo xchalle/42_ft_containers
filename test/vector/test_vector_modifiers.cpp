@@ -17,16 +17,9 @@ static void test_modifier()
 	b.insert(b.end(), TBH, 5);
 	std::cout << " vector2.erase(vector2.first(),  vector2.last()) " <<std::endl;
 	b.erase(b.end() - TBH, b.end());
-	std::cout << " vector2.erase(vector2.iterator()) " <<std::endl;
-	b.erase(b.end());
+//	std::cout << " vector2.erase(vector2.iterator()) " <<std::endl;
+//	b.erase(b.end());
 	std::cout << " vector2.pop_back() " <<std::endl;
-	b.pop_back();
-	b.pop_back();
-	b.pop_back();
-	b.pop_back();
-	b.pop_back();
-	b.pop_back();
-	b.pop_back();
 	b.pop_back();
 	b.pop_back();
 	b.pop_back();

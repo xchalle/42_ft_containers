@@ -49,10 +49,6 @@ void test_stack()
 	print_stack(a);
 	a.pop();
 	a.pop();
-	a.pop();
-	a.pop();
-	a.pop();
-	a.pop();
 	std::cout << "first stack:" << std::endl;
 	print_stack(a);
 	std::cout << std::boolalpha << a.empty() << "first stack empty" << std::endl;
