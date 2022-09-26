@@ -5,7 +5,7 @@ typedef int T;
 void print_stack(NAMESPACE::stack<T> a)
 {
 	NAMESPACE::stack<T> tmp = a;
-	while(!tmp.empty())
+	while(tmp.empty() == 0)
 	{
 		std::cout << tmp.top() << std::endl;
 		tmp.pop();

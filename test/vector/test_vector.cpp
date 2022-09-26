@@ -1,6 +1,5 @@
 #include "../include/include.hpp"
 
-
 void vector_elem_access();
 void vector_capacity();
 void vector_iterator();

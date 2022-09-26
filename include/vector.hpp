@@ -444,6 +444,8 @@ class vector
 
 		void pop_back()
 		{
+			if (_size == 0)
+				return ;
 			_end--;
 			_alloc.destroy(_end);
 			_size--;

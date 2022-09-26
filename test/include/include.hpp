@@ -13,14 +13,16 @@
 
 #define MAX_RAM 4294967296
 #define BUFFER_SIZE 4096
-//#ifndef NAMESPACE
-//#define NAMESPACE std
-//#endif
 
 #include <iostream>
 #include <string>
 
 #include <stdlib.h>
+
+void test_map();
+void test_vector();
+void test_stack();
+void test_set();
 
 template <typename T, typename U>
 void print_map(const NAMESPACE::map<T, U> &mymap)

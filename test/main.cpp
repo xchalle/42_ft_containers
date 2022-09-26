@@ -1,9 +1,5 @@
 #include "include/include.hpp"
 
-void test_map();
-void test_vector();
-void test_set();
-void test_stack();
 
 int main(int ac, char** av)
 {
