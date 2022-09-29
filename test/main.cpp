@@ -14,18 +14,50 @@ int main(int ac, char** av)
 	long long int time1;
 	time1 = (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 	if (tmp == std::string("vector"))
+	{
+		std::cout << std::endl;
+		std::cout <<"TEST VECTOR" << std::endl;
+		std::cout << std::endl;
 		test_vector();
+	}
 	if (tmp == std::string("map"))
+	{
+		std::cout << std::endl;
+		std::cout <<"TEST MAP" << std::endl;
+		std::cout << std::endl;
 		test_map();
+	}
 	if (tmp == std::string("set"))
+	{
+		std::cout << std::endl;
+		std::cout <<"TEST SET" << std::endl;
+		std::cout << std::endl;
 		test_set();
+	}
 	if (tmp == std::string("stack"))
+	{
+		std::cout << std::endl;
+		std::cout <<"TEST STACK" << std::endl;
+		std::cout << std::endl;
 		test_stack();
+	}
 	if (tmp == std::string("all"))
 	{
+		std::cout << std::endl;
+		std::cout <<"TEST STACK" << std::endl;
+		std::cout << std::endl;
 		test_stack();
+		std::cout << std::endl;
+		std::cout <<"TEST SET" << std::endl;
+		std::cout << std::endl;
 		test_set();
+		std::cout << std::endl;
+		std::cout <<"TEST MAP" << std::endl;
+		std::cout << std::endl;
 		test_map();
+		std::cout << std::endl;
+		std::cout <<"TEST VECTOR" << std::endl;
+		std::cout << std::endl;
 		test_vector();
 	}
 	gettimeofday(&tv, NULL);

@@ -39,13 +39,12 @@ namespace ft{
 
 		protected:
 
-			typedef node<value_type> *nodeptr;
-
-		public:
-
+			typedef node<value_type> 		*nodeptr;
 			key_compare				_comp;
 			allocator_type				_alloc;
 			rb_tree<value_type, value_compare>	_rbt;
+
+		public:
 
 			set() : _comp(key_compare()), _alloc(Allocator())//CONSTRUCTOR
 			{}

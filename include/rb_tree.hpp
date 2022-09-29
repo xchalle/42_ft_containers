@@ -25,9 +25,9 @@ namespace ft{
 			color_type color;
 			value_type data;
 
-			node() : parent(NULL), left(NULL), right(NULL), color(BLACK)
+			node() : parent(ft::nullptr_), left(ft::nullptr_), right(ft::nullptr_), color(BLACK)
 			{}
-			node(const value_type &val, bool color_ = BLACK, nodeptr parent_ = NULL, nodeptr left_ = NULL, nodeptr right_ = NULL) : parent(parent_), left(left_), right(right_), color(color_), data(val)
+			node(const value_type &val, bool color_ = BLACK, nodeptr parent_ = ft::nullptr_, nodeptr left_ = ft::nullptr_, nodeptr right_ = ft::nullptr_) : parent(parent_), left(left_), right(right_), color(color_), data(val)
 			{}
 			node(const node& rhs) : parent(rhs.parent), left(rhs.left), right(rhs.right), color(rhs.color), data(rhs.data)
 			{}
@@ -86,7 +86,7 @@ namespace ft{
 	
 			pointer		min(pointer s) const
 			{
-				if (s == NULL || s == _end)
+				if (s == ft::nullptr_ || s == _end)
 					return _end;
 				for ( ; s->left != _end; s = s->left);
 				return s;
@@ -96,7 +96,7 @@ namespace ft{
 	
 			pointer		max(pointer s) const
 			{
-				if (s == NULL || s == _end)
+				if (s == ft::nullptr_ || s == _end)
 					return _end;
 				for ( ; s->right != _end; s = s->right);
 				return s;
@@ -113,13 +113,13 @@ namespace ft{
 	
 			size_type	size()                        const { return _size; }
 			size_type	max_size()                    const { return _node_alloc.max_size(); }
-			pointer		search(const value_type& key) const { return __search_wrapper(_root, key); }
+			pointer		search(const value_type& key) const { return _search(_root, key); }
 	
 			pointer		successor(pointer s) const
 			{
 				if (s->right != _end)
 					return min(s->right);
-				if (s->parent == NULL || s == max())
+				if (s->parent == ft::nullptr_ || s == max())
 					return _end;
 	
 				pointer	tmp = s->parent;
@@ -135,7 +135,7 @@ namespace ft{
 			{
 				if (s->left != _end)
 					return max(s->left);
-				if (s->parent == NULL || s == min())
+				if (s->parent == ft::nullptr_ || s == min())
 					return _end;
 	
 				pointer	tmp = s->parent;
@@ -149,11 +149,11 @@ namespace ft{
 	
 			bool	insert(const value_type& key)
 			{
-				pointer	y = NULL;
+				pointer	y = ft::nullptr_;
 				pointer	x = _root;
 	
 				pointer	s = _node_alloc.allocate(1);
-				_node_alloc.construct(s, node_type(key, RED, NULL, _end, _end));
+				_node_alloc.construct(s, node_type(key, RED, ft::nullptr_, _end, _end));
 	
 				while (x != _end)
 				{
@@ -172,20 +172,20 @@ namespace ft{
 	
 				s->parent = y;
 				++_size;
-				if (y == NULL)
+				if (y == ft::nullptr_)
 					_root = s;
 				else if (_cmp(s->data, y->data))
 					y->left = s;
 				else
 					y->right = s;
 	
-				if (s->parent == NULL)
+				if (s->parent == ft::nullptr_)
 				{
 					s->color = BLACK;
 					return true;
 				}
 	
-				if (s->parent->parent == NULL)
+				if (s->parent->parent == ft::nullptr_)
 					return true;
 	
 				_fix_insertion(s);
@@ -197,7 +197,7 @@ namespace ft{
 			const_pointer		get_cend() const { return _end; }
 	
 			bool	delete_node(const value_type& key)
-			{ return __delete_node_wrapper(_root, key); }
+			{ return _delete_node(_root, key); }
 	
 			void		destroy()
 			{
@@ -260,15 +260,15 @@ namespace ft{
 	
 		private:
 
-			pointer		__search_wrapper(pointer node, const value_type key) const
+			pointer		_search(pointer node, const value_type key) const
 			{
 				//std::cout << "miaou" << std::endl;
 				if (node == _end)
 					return node;
 				else if (_cmp(key, node->data))
-					return __search_wrapper(node->left, key);
+					return _search(node->left, key);
 				else if (_cmp(node->data, key))
-					return __search_wrapper(node->right, key);
+					return _search(node->right, key);
 				else
 					return node;
 			}
@@ -281,7 +281,7 @@ namespace ft{
 				if (tmp->left != _end)
 					tmp->left->parent = s;
 				tmp->parent = s->parent;
-				if (s->parent == NULL)
+				if (s->parent == ft::nullptr_)
 					_root = tmp;
 				else if (s == s->parent->left)
 					s->parent->left = tmp;
@@ -299,7 +299,7 @@ namespace ft{
 				if (y->right != _end)
 					y->right->parent = x;
 				y->parent = x->parent;
-				if (x->parent == NULL)
+				if (x->parent == ft::nullptr_)
 					_root = y;
 				else if (x == x->parent->right)
 					x->parent->right = y;
@@ -441,7 +441,7 @@ namespace ft{
 	
 			void		_rb_transplant(pointer u, pointer v)
 			{
-				if (u->parent == NULL)
+				if (u->parent == ft::nullptr_)
 					_root = v;
 				else if (u == u->parent->left)
 					u->parent->left = v;
@@ -450,7 +450,7 @@ namespace ft{
 				v->parent = u->parent;
 			}
 	
-			bool	__delete_node_wrapper(pointer node, const value_type& key)
+			bool	_delete_node(pointer node, const value_type& key)
 			{
 				pointer	z = _end;
 				pointer	x;
