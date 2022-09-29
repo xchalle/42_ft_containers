@@ -20,8 +20,7 @@ SRC = \
       vector/test_vector_iterators.cpp \
       vector/test_vector_modifiers.cpp \
       vector/test_vector_non_member.cpp \
-      main.cpp 
-
+      main.cpp
 
 SRCSDIR = ./test
 
